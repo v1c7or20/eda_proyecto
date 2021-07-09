@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Parser/BarriosParser.h"
-#include "tests/tests.cpp"
+#include "Tests/Tests.cpp"
 
 int main(int argc, char **argv) {
     BarriosParser parser1("./../neighboord.json");
