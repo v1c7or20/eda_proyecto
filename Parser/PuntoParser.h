@@ -10,17 +10,17 @@
 #include <vector>
 #include <fstream>
 
-#include "../data_classes/punto.h"
+#include "../DataClasses/Punto.h"
 
-class punto_parser {
+class PuntoParser {
 public:
-    punto_parser(const std::string &file);
+    PuntoParser(const std::string &file);
 
-    const std::vector<punto> &getPuntos() const;
+    const std::vector<Punto> &getPuntos() const;
 
 private:
     std::string file;
-    std::vector<punto> puntos;
+    std::vector<Punto> puntos;
 
 
 };

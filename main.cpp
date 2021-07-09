@@ -1,8 +1,8 @@
 #include <iostream>
-#include "parser/barrios_parser.h"
+#include "Parser/BarriosParser.h"
 
 int main() {
-    barrios_parser parser1("./../neighboord.json");
+    BarriosParser parser1("./../neighboord.json");
     std::cout << "Hello, World!" << std::endl;
     return 0;
 }

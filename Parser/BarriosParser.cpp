@@ -2,13 +2,13 @@
 // Created by msi on 6/07/2021.
 //
 
-#include "barrios_parser.h"
+#include "BarriosParser.h"
 #define DEBUG_BASIC false
 
 
 using json = nlohmann::json;
 
-barrios_parser::barrios_parser(const std::string &file) : file(file) {
+BarriosParser::BarriosParser(const std::string &file) : file(file) {
     std::ifstream reader(file);
     json data;
     reader>>data;
@@ -28,13 +28,13 @@ barrios_parser::barrios_parser(const std::string &file) : file(file) {
                 std::cout<<coord->at(1)<<" ";
             }
         }
-        barrio nuevo_barrio(coordinates_vector, name);
+        Barrio nuevo_barrio(coordinates_vector, name);
         barrios.push_back(nuevo_barrio);
     }
 
 }
 
 
-const std::vector<barrio> &barrios_parser::getBarrios() const {
+const std::vector<Barrio> &BarriosParser::getBarrios() const {
     return barrios;
 }

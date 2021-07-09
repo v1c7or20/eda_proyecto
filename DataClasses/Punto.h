@@ -8,9 +8,9 @@
 #include <iostream>
 #include <unordered_map>
 
-class punto {
+class Punto {
 public:
-    punto(std::pair<double, double> &coordenada, bool esInicio, long long int punteroViaje);
+    Punto(std::pair<double, double> &coordenada, bool esInicio, long long int punteroViaje);
 
     const std::pair<double, double> &getCoordenada() const;
 

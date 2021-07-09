@@ -2,14 +2,14 @@
 // Created by msi on 8/07/2021.
 //
 
-#include "punto_parser.h"
+#include "PuntoParser.h"
 
 
-const std::vector<punto> &punto_parser::getPuntos() const {
+const std::vector<Punto> &PuntoParser::getPuntos() const {
     return puntos;
 }
 
-punto_parser::punto_parser(const std::string &file) : file(file) {
+PuntoParser::PuntoParser(const std::string &file) : file(file) {
     std::ifstream reader(file);
     std::string vendor_id, date_pick, drop, flag, rate;
     double longitud_inicio, latitud_inicio, longitud_destino, latitud_destino;

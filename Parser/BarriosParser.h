@@ -9,19 +9,19 @@
 #include <fstream>
 #include <iostream>
 #include <nlohmann/json.hpp>
-#include "../data_classes/barrio.h"
+#include "../DataClasses/Barrio.h"
 
 
 
-class barrios_parser {
+class BarriosParser {
 public:
-    barrios_parser(const std::string &file);
+    BarriosParser(const std::string &file);
 
-    const std::vector<barrio> &getBarrios() const;
+    const std::vector<Barrio> &getBarrios() const;
 
 private:
     std::string file;
-    std::vector<barrio> barrios;
+    std::vector<Barrio> barrios;
 };
 
 
