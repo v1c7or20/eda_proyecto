@@ -6,7 +6,7 @@
 #define EDA_PROYECTO_VIAJES_H
 
 
-class viajes {
+class Viajes {
 private:
 
 };

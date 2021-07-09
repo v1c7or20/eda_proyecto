@@ -9,9 +9,9 @@
 #include <string>
 #include "algorithm"
 
-class barrio {
+class Barrio {
 public:
-    barrio(const std::vector<std::pair<double, double>> &poligono, std::string nombre);
+    Barrio(const std::vector<std::pair<double, double>> &poligono, std::string nombre);
 
     const std::vector<std::pair<double, double>> &getPoligono() const;
 

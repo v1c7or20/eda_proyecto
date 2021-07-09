@@ -1,8 +1,8 @@
 #include <gtest/gtest.h>
 #include <iostream>
-#include "../data_classes/barrio.h"
-#include "../data_classes/punto.h"
-#include "../data_classes/viajes.h"
+#include "../DataClasses/Barrio.h"
+#include "../DataClasses/Punto.h"
+#include "../DataClasses/Viajes.h"
 
 
 class DataClassesTest : public ::testing::Test {

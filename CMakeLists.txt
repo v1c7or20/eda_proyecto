@@ -19,17 +19,17 @@ if(NOT json_POPULATED)
     add_subdirectory(${json_SOURCE_DIR} ${json_BINARY_DIR} EXCLUDE_FROM_ALL)
 endif()
 enable_testing()
+
 add_executable(EDA_proyecto
   main.cpp
-#   tests/tests.cpp
-  data_classes/punto.cpp
-  data_classes/viajes.cpp
-  data_classes/barrio.cpp
-  data_classes/barrio.h
-  parser/barrios_parser.cpp
-  parser/barrios_parser.h
-  parser/punto_parser.h
-  parser/punto_parser.cpp
+  DataClasses/Punto.cpp
+  DataClasses/Viajes.cpp
+  DataClasses/Barrio.cpp
+  DataClasses/Barrio.h
+  Parser/BarriosParser.cpp
+  Parser/BarriosParser.h
+  Parser/PuntoParser.h
+  Parser/PuntoParser.cpp
   )
 
 target_link_libraries(
@@ -38,3 +38,5 @@ target_link_libraries(
 )
 include(GoogleTest)
 gtest_discover_tests(EDA_proyecto)
+
+
