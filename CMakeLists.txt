@@ -20,8 +20,8 @@ if(NOT json_POPULATED)
 endif()
 enable_testing()
 add_executable(EDA_proyecto
-  tests/tests.cpp
   main.cpp
+#   tests/tests.cpp
   data_classes/punto.cpp
   data_classes/viajes.cpp
   data_classes/barrio.cpp
