@@ -8,7 +8,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <../nlohmann/json.hpp>
+#include <nlohmann/json.hpp>
 #include "../data_classes/barrio.h"
 
 
@@ -16,6 +16,8 @@
 class barrios_parser {
 public:
     barrios_parser(const std::string &file);
+
+    const std::vector<barrio> &getBarrios() const;
 
 private:
     std::string file;
