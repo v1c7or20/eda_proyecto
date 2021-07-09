@@ -8,8 +8,8 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include <nlohmann/json.hpp>
-#include "barrio.h"
+#include <../nlohmann/json.hpp>
+#include "../data_classes/barrio.h"
 
 
 
