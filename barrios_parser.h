@@ -6,7 +6,12 @@
 #define EDA_PROYECTO_BARRIOS_PARSER_H
 
 #include <string>
+#include <fstream>
+#include <iostream>
+#include <nlohmann/json.hpp>
 #include "barrio.h"
+
+
 
 class barrios_parser {
 public:

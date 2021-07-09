@@ -6,11 +6,12 @@
 #define EDA_PROYECTO_BARRIO_H
 
 #include <vector>
+#include <string>
 #include "algorithm"
 
 class barrio {
 public:
-    barrio(const std::vector<std::pair<double, double>> &poligono);
+    barrio(const std::vector<std::pair<double, double>> &poligono, std::string nombre);
 
     const std::vector<std::pair<double, double>> &getPoligono() const;
 
@@ -18,12 +19,16 @@ public:
 
     const std::pair<double, double> &getCoordenadaMaxima() const;
 
+    const std::string &getNombre() const;
+
 private:
     std::vector<std::pair<double,double>> poligono;
 
     std::pair<double,double> coordenada_minima;
 
     std::pair<double,double> coordenada_maxima;
+
+    std::string nombre;
 };
 
 
