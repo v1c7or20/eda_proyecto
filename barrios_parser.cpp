@@ -31,8 +31,10 @@ barrios_parser::barrios_parser(const std::string &file) : file(file) {
         barrio nuevo_barrio(coordinates_vector, name);
         barrios.push_back(nuevo_barrio);
     }
-    std::cout<<data;
 
 }
 
 
+const std::vector<barrio> &barrios_parser::getBarrios() const {
+    return barrios;
+}

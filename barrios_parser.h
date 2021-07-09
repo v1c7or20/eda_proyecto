@@ -17,6 +17,8 @@ class barrios_parser {
 public:
     barrios_parser(const std::string &file);
 
+    const std::vector<barrio> &getBarrios() const;
+
 private:
     std::string file;
     std::vector<barrio> barrios;
