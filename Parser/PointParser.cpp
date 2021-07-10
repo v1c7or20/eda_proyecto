@@ -2,15 +2,10 @@
 // Created by msi on 8/07/2021.
 //
 
-#include "PuntoParser.h"
+#include "PointParser.h"
 
-
-const std::vector<Punto> &PuntoParser::getPuntos() const {
-    return puntos;
-}
-
-PuntoParser::PuntoParser(const std::string &file) : file(file) {
-    std::ifstream reader(file);
+PointParser::PointParser(std::string filename) : filename(filename) {
+    std::ifstream reader(filename);
     std::string vendor_id, date_pick, drop, flag, rate;
     double longitud_inicio, latitud_inicio, longitud_destino, latitud_destino;
     std::string count, distance, fare, extra,MTA,TIP;
@@ -29,4 +24,8 @@ PuntoParser::PuntoParser(const std::string &file) : file(file) {
 
         getline(reader, genero);*/
     }
+}
+
+std::vector<Point> &PointParser::getPoints(){
+    return points;
 }

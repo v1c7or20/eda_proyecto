@@ -16,6 +16,7 @@ if(NOT json_POPULATED)
 endif()
 
 
-add_executable(EDA_proyecto main.cpp DataClasses/Punto.cpp DataClasses/Viajes.cpp DataClasses/Barrio.cpp DataClasses/Barrio.h Parser/BarriosParser.cpp Parser/BarriosParser.h Parser/PuntoParser.h Parser/PuntoParser.cpp)
+add_executable(EDA_proyecto main.cpp Classes/Point.cpp Classes/Travel.cpp Classes/Neighborhood.cpp
+                            Parser/NeighborhoodParser.cpp Parser/PointParser.cpp)
 
 target_link_libraries(EDA_proyecto PRIVATE nlohmann_json::nlohmann_json)
