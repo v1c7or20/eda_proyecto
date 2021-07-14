@@ -6,7 +6,7 @@
 
 PointParser::PointParser(std::string filename) : filename(filename) {
     std::ifstream reader;
-    reader.open(filename,std::ios::in);
+    reader.open(this->filename,std::ios::in);
     std::string linea;
     std::getline(reader, linea);
     while ( std::getline(reader, linea)) {

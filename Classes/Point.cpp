@@ -14,7 +14,7 @@ coordinate_t Point::getCoordinate() {
     return this->coordinate;
 }
 
-bool Point::isStart() { 
+bool Point::isStart() const {
     return this->start;
 }
 
@@ -22,20 +22,35 @@ Travel * Point::getTravelInformation() {
     return this->travelInformation;
 }
 
-void Point::setCoordinate(const coordinate_t &coordinate) {
-    Point::coordinate = coordinate;
+void Point::setCoordinate(const coordinate_t &_coordinate) {
+    Point::coordinate = _coordinate;
 }
 
 void Point::setStart(bool start) {
     Point::start = start;
 }
 
-void Point::setTravelInformation(Travel * travelInformation) {
-    Point::travelInformation = travelInformation;
+void Point::setTravelInformation(Travel * _travelInformation) {
+    Point::travelInformation = _travelInformation;
 }
 
-Point::Point() {}
+bool Point::isInsidePolygon(std::vector<coordinate_t> polygon) const {
 
-void Point::setNext(Point *next) {
-    Point::next = next;
+    unsigned int i, j=polygon.size()-1 ;
+    bool  oddNodes= false      ;
+
+    for (i=0; i<polygon.size(); i++) {
+        if ((polygon[i].second< this->coordinate.second && polygon[j].second>=this->coordinate.second
+             ||   polygon[j].second< this->coordinate.second && polygon[i].second>=this->coordinate.second)
+            &&  (polygon[i].first<=this->coordinate.first || polygon[j].first<=this->coordinate.first)) {
+            oddNodes^=(polygon[i].first+(this->coordinate.second-polygon[i].second)/(polygon[j].second-polygon[i].second)*(polygon[j].first-polygon[i].first)<this->coordinate.first); }
+        j=i; }
+
+    return oddNodes;
+}
+
+Point::Point() = default;
+
+void Point::setNext(Point *_next) {
+    Point::next = _next;
 }
