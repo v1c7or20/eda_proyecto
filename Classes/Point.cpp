@@ -49,6 +49,11 @@ bool Point::isInsidePolygon(std::vector<coordinate_t> polygon) const {
     return oddNodes;
 }
 
+bool Point::isInsideRectangle(std::pair<float, float> min, std::pair<float, float> max) const {
+    return (min.first <= this->coordinate.first and this->coordinate.first <= max.first
+    and min.second <= this->coordinate.second and this->coordinate.second <= max.second);
+}
+
 Point::Point() = default;
 
 void Point::setNext(Point *_next) {

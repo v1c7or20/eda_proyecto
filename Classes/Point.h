@@ -35,6 +35,8 @@ public:
     void setNext(Point *next);
 
     bool isInsidePolygon(std::vector<coordinate_t> polygon) const;
+
+    bool isInsideRectangle(std::pair<float,float>min, std::pair<float,float>max) const:
 };
 
 #endif //EDA_PROYECTO_POINT_H
