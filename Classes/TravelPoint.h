@@ -2,25 +2,25 @@
 // Created by msi on 6/07/2021.
 //
 
-#ifndef EDA_PROYECTO_POINT_H
-#define EDA_PROYECTO_POINT_H
+#ifndef EDA_PROYECTO_TRAVELPOINT_H
+#define EDA_PROYECTO_TRAVELPOINT_H
 
 #include <vector>
 #include "GlobalConstants.h"
 #include "Travel.h"
 
 
-class Point{
+class TravelPoint{
 private:
     coordinate_t coordinate;
     bool start{};
-    Point * next{};
+    TravelPoint * next{};
     Travel * travelInformation{};
 
 public:
-    Point(coordinate_t coordinate, bool start, address_t travelInformation);
+    TravelPoint(coordinate_t coordinate, bool start, address_t travelInformation);
 
-    Point();
+    TravelPoint();
 
     coordinate_t getCoordinate();
     bool isStart() const;
@@ -39,4 +39,4 @@ public:
     bool isInsideRectangle(std::pair<float,float>min, std::pair<float,float>max) const:
 };
 
-#endif //EDA_PROYECTO_POINT_H
+#endif //EDA_PROYECTO_TRAVELPOINT_H

@@ -2,39 +2,41 @@
 // Created by msi on 6/07/2021.
 //
 
-#include "Point.h"
+#include "TravelPoint.h"
 
-Point::Point(coordinate_t coordinate, bool start, address_t travelInformation){
+TravelPoint::TravelPoint() = default;
+
+TravelPoint::TravelPoint(coordinate_t coordinate, bool start, address_t travelInformation){
     this->coordinate = coordinate;
     this->start = start;
     this->travelInformation = nullptr;
 }
 
-coordinate_t Point::getCoordinate() {
+coordinate_t TravelPoint::getCoordinate() {
     return this->coordinate;
 }
 
-bool Point::isStart() const {
+bool TravelPoint::isStart() const {
     return this->start;
 }
 
-Travel * Point::getTravelInformation() {
+Travel * TravelPoint::getTravelInformation() {
     return this->travelInformation;
 }
 
-void Point::setCoordinate(const coordinate_t &_coordinate) {
-    Point::coordinate = _coordinate;
+void TravelPoint::setCoordinate(const coordinate_t &_coordinate) {
+    this->coordinate = _coordinate;
 }
 
-void Point::setStart(bool start) {
-    Point::start = start;
+void TravelPoint::setStart(bool start) {
+    this->start = start;
 }
 
-void Point::setTravelInformation(Travel * _travelInformation) {
-    Point::travelInformation = _travelInformation;
+void TravelPoint::setTravelInformation(Travel * _travelInformation) {
+    this->travelInformation = _travelInformation;
 }
 
-bool Point::isInsidePolygon(std::vector<coordinate_t> polygon) const {
+bool TravelPoint::isInsidePolygon(std::vector<coordinate_t> polygon) const {
 
     unsigned int i, j=polygon.size()-1 ;
     bool  oddNodes= false      ;
@@ -49,13 +51,7 @@ bool Point::isInsidePolygon(std::vector<coordinate_t> polygon) const {
     return oddNodes;
 }
 
-bool Point::isInsideRectangle(std::pair<float, float> min, std::pair<float, float> max) const {
+bool TravelPoint::isInsideRectangle(std::pair<float, float> min, std::pair<float, float> max) const {
     return (min.first <= this->coordinate.first and this->coordinate.first <= max.first
     and min.second <= this->coordinate.second and this->coordinate.second <= max.second);
-}
-
-Point::Point() = default;
-
-void Point::setNext(Point *_next) {
-    Point::next = _next;
 }
