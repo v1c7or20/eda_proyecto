@@ -11,13 +11,31 @@ class DataClassesTest : public ::testing::Test {
     data_t temp = 5;
 };
 
+TEST(ExampleTestxdxd, example){
+  ASSERT_TRUE(5==5);
+  std::cout << "Example 1 " << std::endl;
+}
+
+TEST(ExampleTestxdxd, example){
+  ASSERT_TRUE(5==5);
+  std::cout << "Example 1 " << std::endl;
+}
+
 TEST_F(DataClassesTest, emptyFirstTest) {
   data_t temp2 = 5;
   EXPECT_EQ(temp, temp2);
   ASSERT_EQ(temp, temp2);
+  ASSERT_TRUE(temp2 == 5);
   std::cout << "Test test" << std::endl;
   // ASSERT_TRUE(node != nullptr);
 }
+
+class ParserTests : public ::testing::Test {
+  protected:
+    using data_t = int;
+    data_t temp = 5;
+};
+
 
 // class QuadTreeParamTest : public ::testing::TestWithParam<std::size_t> {
 //   protected:

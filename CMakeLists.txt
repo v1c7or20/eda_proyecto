@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 project(EDA_proyecto)
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 include(FetchContent)
 FetchContent_Declare(json
         GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
@@ -20,16 +20,14 @@ if(NOT json_POPULATED)
 endif()
 enable_testing()
 
-add_executable(EDA_proyecto
+add_executable(
+  EDA_proyecto
   main.cpp
-  DataClasses/Punto.cpp
-  DataClasses/Viajes.cpp
-  DataClasses/Barrio.cpp
-  DataClasses/Barrio.h
-  Parser/BarriosParser.cpp
-  Parser/BarriosParser.h
-  Parser/PuntoParser.h
-  Parser/PuntoParser.cpp
+  Classes/Point.cpp
+  Classes/Travel.cpp
+  Classes/Neighborhood.cpp
+  Parser/NeighborhoodParser.cpp
+  Parser/PointParser.cpp
   )
 
 target_link_libraries(
@@ -38,5 +36,3 @@ target_link_libraries(
 )
 include(GoogleTest)
 gtest_discover_tests(EDA_proyecto)
-
-
