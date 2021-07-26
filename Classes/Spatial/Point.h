@@ -3,6 +3,7 @@
 
 #include <cmath>
 #include <array>
+#include <algorithm> 
 using distance_t = double;
 
 template<typename DataType, std::size_t DIM>
@@ -10,10 +11,10 @@ class Point
 {
 public:
     Point() {
-        std::fill_n(_values, DIM, DataType(0));
+        std::fill_n(_values.begin(), DIM, DataType(0));
     }
 
-    Point(const std::array<DataType, DIM>& init_array):_values(init_array){ }
+    explicit Point(const std::array<DataType, DIM>& init_array):_values(init_array){ }
 
     bool operator==(const Point<DataType, DIM>& p) const;
     bool operator<(const Point<DataType, DIM>& p) const;

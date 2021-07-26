@@ -2,20 +2,41 @@
 #define EDA_PROYECTO_RNODE_H
 
 #include <vector>
+#include <algorithm>
+#include <cstdint>
+#include <memory>
+#include <variant>
+#define RNODE_POINTER 0
 
-template<typename Rectangle, typename Point>
+template<typename Rectangle, typename Point, typename DataType>
 class RNode{
-public:
-    RNode();
-    RNode(bool leaf); 
-    bool isLeaf();
-    void add(Rectangle rectangle);
-    std::size_t size();
+protected:
+    struct Branch{
+        Rectangle rectangle;
+        std::variant<std::shared_ptr<RNode>, DataType> element;
+        Branch()= default;
+        Branch(Rectangle rectangle, std::shared_ptr<RNode> child){
+            this->rectangle = rectangle;
+            this->element = child;
+        }
+        Branch(Rectangle rectangle, DataType data){
+            this->rectangle = rectangle;
+            this->element = data;
+        }
+    };
 private:
-    bool _leaf;
-    std::vector<Rectangle> rectangles;
-    std::vector<std::shared_ptr<RNode>> _children;
-    Rectangle _mbr;
+    std::shared_ptr<RNode> pickChild(Rectangle rectangle);
+public:
+    RNode()= default;
+    explicit RNode(bool leaf);
+    bool isLeaf();
+    void add(Rectangle rectangle, DataType data);
+    std::size_t size();
+    static Rectangle rectangleIncluding(Rectangle rectA, Rectangle rectB);
+    void createBranch(Rectangle rectangle, DataType data);
+private:
+    bool _leaf{};
+    std::vector<Branch> _branches;
 };
 
-#endif // EDA_PROYURE_RNODE_H
+#endif // EDA_PROYECTO_RNODE_H
