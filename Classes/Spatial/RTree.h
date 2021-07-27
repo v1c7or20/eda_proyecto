@@ -14,6 +14,9 @@ private:
     void insertUtil(std::shared_ptr<node_t> node, rectangle_t rectangle, DataType data);
     bool checkRNode(std::shared_ptr<node_t> node);
     std::pair<node_t, node_t> splitNode(node_t node);
+    std::pair<node_t, node_t> quadraticSplit(node_t node);
+    std::vector<node_t> qPickSeeds(node_t node);
+    void qDistribute(node_t nodeToSplit, node_t nodeA, node_t nodeB);
 public:
     RTree()= default;
     void insert(Point new_point, DataType data);

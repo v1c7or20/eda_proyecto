@@ -5,7 +5,7 @@
 
 RTREE_TEMPLATE
 bool RTREE_DEFINITION::checkRNode(std::shared_ptr<node_t> node){
-    if(node.size() <= this->_MAXNODES) return true;
+    if(node.size() <= MAXNODES) return true;
     return false;
 }
 
@@ -46,5 +46,6 @@ bool RTREE_DEFINITION::overlap(rectangle_t rectA, rectangle_t rectB){
 
 RTREE_TEMPLATE
 std::pair<RNode<Point, DataType>, RNode<Point, DataType>> RTREE_DEFINITION::splitNode(node_t node){
-
+    assert(node.size() > MAXNODES);
+    return quadraticSplit(node);
 }
