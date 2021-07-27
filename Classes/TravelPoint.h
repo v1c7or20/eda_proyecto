@@ -15,7 +15,6 @@ private:
     Point<double,2> point;
     Neighborhood *neighborhood;
     bool startingPoint;
-    TravelPoint * next;
 public:
     TravelPoint(coordinate_t coordinate, bool start);
 
@@ -31,11 +30,7 @@ public:
 
     bool isStartingPoint() const;
 
-    TravelPoint *getNext() const;
-
     void setNeighborhood(Neighborhood *neighborhood);
-
-    void setNext(TravelPoint *next);
 
 };
 
