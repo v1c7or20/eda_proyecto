@@ -35,4 +35,4 @@ target_link_libraries(
   gtest_main
 )
 include(GoogleTest)
-gtest_discover_tests(EDA_proyecto)
+gtest_discover_tests(EDA_proyecto DISCOVERY_TIMEOUT 200)

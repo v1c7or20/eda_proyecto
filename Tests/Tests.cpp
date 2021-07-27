@@ -38,13 +38,17 @@ class ParserTests : public ::testing::Test {
 };
 
 TEST_F(ParserTests, correctFileExistance) {
+  EXPECT_NO_THROW({
+      TP tp = TP("./../green_tripdata_2015-01.csv");
+  });
+}
+
+
+TEST_F(ParserTests, fileSizeMoreThan0) {
   TP tp = TP("./../green_tripdata_2015-01.csv");
   std::vector<Travel *> travels = tp.getTravels();
   data_t travelNumber = travels.size();
   EXPECT_GT(travelNumber, 0);
-  EXPECT_NO_THROW({
-      TP tp = TP("./../green_tripdata_2015-01.csv");
-  });
 }
 
 TEST_F(ParserTests, nonExistantOrEmptyFile) {
