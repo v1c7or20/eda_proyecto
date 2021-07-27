@@ -51,7 +51,7 @@ bool TravelPoint::isInsidePolygon(std::vector<coordinate_t> polygon) const {
     return oddNodes;
 }
 
-bool TravelPoint::isInsideRectangle(std::pair<float, float> min, std::pair<float, float> max) const {
+/*bool TravelPoint::isInsideRectangle(std::pair<float, float> min, std::pair<float, float> max) const {
     return (min.first <= this->coordinate.first and this->coordinate.first <= max.first
     and min.second <= this->coordinate.second and this->coordinate.second <= max.second);
-}
+}*/

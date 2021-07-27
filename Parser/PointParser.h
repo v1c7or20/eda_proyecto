@@ -5,7 +5,7 @@
 #ifndef EDA_PROYECTO_POINT_PARSER_H
 #define EDA_PROYECTO_POINT_PARSER_H
 
-#include "../Classes/Point.h"
+#include "../Classes/TravelPoint.h"
 #include "../Classes/Travel.h"
 
 #include <string>
@@ -17,10 +17,10 @@
 class PointParser {
 private:
     std::string filename;
-    std::vector<Point *> points;
+    std::vector<TravelPoint *> points;
 public:
     PointParser(std::string filename);
-    std::vector<Point *> &getPoints();
+    std::vector<TravelPoint *> &getPoints();
 };
 
 

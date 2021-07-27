@@ -32,11 +32,11 @@ public:
 
     void setTravelInformation(Travel * travelInformation);
 
-    void setNext(Point *next);
+    void setNext(TravelPoint *next);
 
     bool isInsidePolygon(std::vector<coordinate_t> polygon) const;
 
-    bool isInsideRectangle(std::pair<float,float>min, std::pair<float,float>max) const:
+    //bool isInsideRectangle(std::pair<float,float>min, std::pair<float,float>max) const:
 };
 
 #endif //EDA_PROYECTO_TRAVELPOINT_H

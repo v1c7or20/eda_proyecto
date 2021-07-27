@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 #include <iostream>
-#include "../DataClasses/Barrio.h"
-#include "../DataClasses/Punto.h"
-#include "../DataClasses/Viajes.h"
+#include "../Classes/Neighborhood.h"
+#include "../Classes/TravelPoint.h"
+#include "../Classes/Travel.h"
+#include "../Parser/PointParser.h"
 
 
 class DataClassesTest : public ::testing::Test {
@@ -16,7 +17,7 @@ TEST(ExampleTestxdxd, example){
   std::cout << "Example 1 " << std::endl;
 }
 
-TEST(ExampleTestxdxd, example){
+TEST(ExampleTestxdxd, example2){
   ASSERT_TRUE(5==5);
   std::cout << "Example 1 " << std::endl;
 }
@@ -32,10 +33,18 @@ TEST_F(DataClassesTest, emptyFirstTest) {
 
 class ParserTests : public ::testing::Test {
   protected:
-    using data_t = int;
+    using PP = PointParser("./../green_tripdata_2015-01.csv");
     data_t temp = 5;
 };
 
+TEST_F(ParserTests, pointReading) {
+
+  EXPECT_EQ(temp, temp2);
+  ASSERT_EQ(temp, temp2);
+  ASSERT_TRUE(temp2 == 5);
+  std::cout << "Test test" << std::endl;
+  // ASSERT_TRUE(node != nullptr);
+}
 
 // class QuadTreeParamTest : public ::testing::TestWithParam<std::size_t> {
 //   protected:

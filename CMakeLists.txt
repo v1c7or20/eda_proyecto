@@ -23,7 +23,7 @@ enable_testing()
 add_executable(
   EDA_proyecto
   main.cpp
-  Classes/Point.cpp
+  Classes/TravelPoint.cpp
   Classes/Travel.cpp
   Classes/Neighborhood.cpp
   Parser/NeighborhoodParser.cpp
