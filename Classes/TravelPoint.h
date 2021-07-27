@@ -28,6 +28,8 @@ public:
 
     Neighborhood *getNeighborhood() const;
 
+    void setNext(TravelPoint *next);
+
     bool isStartingPoint() const;
 
     void setNeighborhood(Neighborhood *neighborhood);
