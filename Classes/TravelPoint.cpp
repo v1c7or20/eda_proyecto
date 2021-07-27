@@ -43,14 +43,7 @@ bool TravelPoint::isStartingPoint() const {
     return startingPoint;
 }
 
-TravelPoint *TravelPoint::getNext() const {
-    return next;
-}
-
 void TravelPoint::setNeighborhood(Neighborhood *neighborhood) {
     TravelPoint::neighborhood = neighborhood;
 }
 
-void TravelPoint::setNext(TravelPoint *next) {
-    TravelPoint::next = next;
-}
