@@ -7,6 +7,7 @@
 
 
 #include <string>
+#include "TravelPoint.h"
 
 class Travel{
 public:
@@ -30,13 +31,22 @@ public:
 
     void setFareAmount(double fareAmount);
 
+    TravelPoint &getStartingPoint();
+
+    TravelPoint &getArrivalPoint();
+
+    void setStartingPint(const TravelPoint &startingPint);
+
+    void setArrivalPoint(const TravelPoint &arrivalPoint);
+
 private:
     std::string pickupDate;
     std::string dropoffDate;
     int passengerCount;
     double tripDistance;
     double fareAmount;
-
+    TravelPoint StartingPoint;
+    TravelPoint ArrivalPoint;
 };
 
 

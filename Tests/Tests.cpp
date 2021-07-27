@@ -3,7 +3,7 @@
 #include "../Classes/Neighborhood.h"
 #include "../Classes/TravelPoint.h"
 #include "../Classes/Travel.h"
-#include "../Parser/PointParser.h"
+#include "../Parser/TravelParser.h"
 
 
 class DataClassesTest : public ::testing::Test {
@@ -33,12 +33,13 @@ TEST_F(DataClassesTest, emptyFirstTest) {
 
 class ParserTests : public ::testing::Test {
   protected:
-    using PP = PointParser("./../green_tripdata_2015-01.csv");
+    using data_t = int;
+    TravelParser PP = TravelParser("./../green_tripdata_2015-01.csv");
     data_t temp = 5;
 };
 
 TEST_F(ParserTests, pointReading) {
-
+  data_t temp2 = 5;
   EXPECT_EQ(temp, temp2);
   ASSERT_EQ(temp, temp2);
   ASSERT_TRUE(temp2 == 5);

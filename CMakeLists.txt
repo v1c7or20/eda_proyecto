@@ -27,7 +27,7 @@ add_executable(
   Classes/Travel.cpp
   Classes/Neighborhood.cpp
   Parser/NeighborhoodParser.cpp
-  Parser/PointParser.cpp
+  Parser/TravelParser.cpp
   )
 
 target_link_libraries(
