@@ -34,19 +34,28 @@ TEST_F(DataClassesTest, emptyFirstTest) {
 class ParserTests : public ::testing::Test {
   protected:
     using data_t = int;
-    TravelParser PP = TravelParser("./../green_tripdata_2015-01.csv");
-    data_t temp = 5;
+    using TP = TravelParser;
 };
 
-TEST_F(ParserTests, pointReading) {
-  data_t temp2 = 5;
-  EXPECT_EQ(temp, temp2);
-  ASSERT_EQ(temp, temp2);
-  ASSERT_TRUE(temp2 == 5);
-  std::cout << "Test test" << std::endl;
-  // ASSERT_TRUE(node != nullptr);
+TEST_F(ParserTests, correctFileExistance) {
+  EXPECT_NO_THROW({
+      TP tp = TP("./../green_tripdata_2015-01.csv");
+  });
 }
 
+
+TEST_F(ParserTests, fileSizeMoreThan0) {
+  TP tp = TP("./../green_tripdata_2015-01.csv");
+  std::vector<Travel *> travels = tp.getTravels();
+  data_t travelNumber = travels.size();
+  EXPECT_GT(travelNumber, 0);
+}
+
+TEST_F(ParserTests, nonExistantOrEmptyFile) {
+  EXPECT_THROW({
+      TP tp = TP("./../badfile.csvv");
+  }, std::invalid_argument);
+}
 // class QuadTreeParamTest : public ::testing::TestWithParam<std::size_t> {
 //   protected:
 //     using data_t = int;

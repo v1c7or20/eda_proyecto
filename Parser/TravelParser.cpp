@@ -57,6 +57,9 @@ TravelParser::TravelParser(std::string filename) : filename(filename) {
         }
         travels.push_back(newTravel);
     }
+    if ( travels.size() == 0 ) {
+      throw std::invalid_argument( "File empty or not found" );
+    }
 }
 std::vector<Travel *> & TravelParser::getTravels(){
     return travels;
