@@ -3,21 +3,23 @@
 
 #include <memory>
 #include <cassert>
-template<typename Node, typename Rectangle, typename Point, typename DataType>
+#include "RNode.h"
+
+template<typename Point, typename DataType, std::size_t MAXNODES = 4, std::size_t MINNODES = MAXNODES / 2>
 class RTree{
 private:
-    void insertUtil(std::shared_ptr<Node> node, Rectangle rectangle, DataType data);
-    bool checkRNode(std::shared_ptr<Node> node);
-public:
-    RTree();
-    RTree(std::size_t MAXNODES, std::size_t MINNODES);
-    void insert(Point new_point, DataType data);
-    bool overlap(Rectangle rect1, Rectangle rect2);
-private:
-    std::shared_ptr<Node> _root;
-    std::size_t _MAXNODES;
-    std::size_t _MINNODES;
+    using rectangle_t = Rectangle<Point>; 
+    using node_t = RNode<Point, DataType>;
 
+    void insertUtil(std::shared_ptr<node_t> node, rectangle_t rectangle, DataType data);
+    bool checkRNode(std::shared_ptr<node_t> node);
+    std::pair<node_t, node_t> splitNode(node_t node);
+public:
+    RTree()= default;
+    void insert(Point new_point, DataType data);
+    bool overlap(rectangle_t rect1, rectangle_t rect2);
+private:
+    std::shared_ptr<node_t> _root;
 };
 
 

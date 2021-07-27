@@ -1,30 +1,18 @@
 #include "RTree.h"
-#define RTREE_TEMPLATE template<typename Node, typename Rectangle, typename Point, typename DataType> 
-#define RTREE_DEFINITION RTree<Node, Rectangle, Point, DataType>
+#define RTREE_TEMPLATE template<typename Point, typename DataType, std::size_t MAXNODES, std::size_t MINNODES> 
+#define RTREE_DEFINITION RTree<Point, DataType, MAXNODES, MINNODES>
+
 
 RTREE_TEMPLATE
-RTree<Node, Rectangle, Point, DataType>::RTree(){
-    _MAXNODES = 4;
-    _MINNODES = _MAXNODES / 2;
-}
-
-RTREE_TEMPLATE
-RTree<Node, Rectangle, Point, DataType>::RTree(std::size_t MAXNODES, std::size_t MINNODES){
-    assert(MAXNODES > MINNODES);
-    _MAXNODES = MAXNODES;
-    _MINNODES = MINNODES;
-}
-
-RTREE_TEMPLATE
-bool RTREE_DEFINITION::checkRNode(std::shared_ptr<Node> node){
+bool RTREE_DEFINITION::checkRNode(std::shared_ptr<node_t> node){
     if(node.size() <= this->_MAXNODES) return true;
     return false;
 }
 
 RTREE_TEMPLATE
-void RTREE_DEFINITION::insertUtil(std::shared_ptr<Node> node, Rectangle rectangle, DataType data){
+void RTREE_DEFINITION::insertUtil(std::shared_ptr<node_t> node, rectangle_t rectangle, DataType data){
     if(!node){
-        node = std::make_shared<Node>(true);
+        node = std::make_shared<node_t>(true);
     }
 
     if(node.isLeaf()){
@@ -38,7 +26,7 @@ void RTREE_DEFINITION::insertUtil(std::shared_ptr<Node> node, Rectangle rectangl
 
 RTREE_TEMPLATE
 void RTREE_DEFINITION::insert(Point point, DataType data){
-    Rectangle rect(point, point);
+    rectangle_t rect(point, point);
     insertUtil(this->_root, rect, data);
     if(!this->checkRNode(_root)){
         
@@ -46,7 +34,7 @@ void RTREE_DEFINITION::insert(Point point, DataType data){
 }
 
 RTREE_TEMPLATE
-bool RTREE_DEFINITION::overlap(Rectangle rectA, Rectangle rectB){
+bool RTREE_DEFINITION::overlap(rectangle_t rectA, rectangle_t rectB){
     std::size_t dimension = rectA.getDimension();
     for(int index = 0; index < dimension; ++index){
         if (rectA._min.get(index) > rectB._max.get(index) ||
@@ -54,4 +42,9 @@ bool RTREE_DEFINITION::overlap(Rectangle rectA, Rectangle rectB){
         return false;
     }
   return true;
+}
+
+RTREE_TEMPLATE
+std::pair<RNode<Point, DataType>, RNode<Point, DataType>> RTREE_DEFINITION::splitNode(node_t node){
+
 }
