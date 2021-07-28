@@ -75,3 +75,13 @@ void RNODE_DEFINITION::setNewEntry(std::size_t index, std::shared_ptr<entry_t> e
     _entries[index].reset();
     _entries[index] = entry;
 }
+
+RNODE_TEMPLATE
+std::vector<DataType> RNODE_DEFINITION::getAllData(rectangle_t rectangle){
+    std::vector<DataType> result;
+    for(std::size_t i = 0; i < _entries.size(); ++i){
+        if(rectangle_t::overlap(_entries[i]->rectangle, rectangle))
+            result.push_back(_entries[i]->getData());
+    }
+    return result;
+}

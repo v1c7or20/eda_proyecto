@@ -24,6 +24,10 @@ public:
     std::shared_ptr<node_t> getChild(){
         return std::get<std::shared_ptr<node_t>>(element);
     }
+
+    DataType getData(){
+        return std::get<DataType>(element);
+    }
 };
 
 #endif // EDA_PROYECTO_BRANCH_H
