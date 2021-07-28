@@ -43,8 +43,6 @@ public:
 
     Travel(const Travel &obj);
 
-    Travel();
-
 private:
     std::string pickupDate;
     std::string dropoffDate;
