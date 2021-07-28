@@ -34,7 +34,9 @@ void RTREE_DEFINITION::insertUtil(std::shared_ptr<node_t> node, rectangle_t& rec
     }
 
     std::size_t indexNextChild = node->pickChild(rectangle);
-    auto nextChild = node->getEntry(indexNextChild)->getChild();
+    auto nextEntry = node->getEntry(indexNextChild);
+    auto nextChild = nextEntry->getChild();
+    std::size_t prevSize = nextChild->size();
     insertUtil(nextChild, rectangle, data);
     if(!checkRNode(nextChild)){
         auto result = splitNode(nextChild);
@@ -42,6 +44,10 @@ void RTREE_DEFINITION::insertUtil(std::shared_ptr<node_t> node, rectangle_t& rec
         auto nodeB = result.second;
         node->setNewEntry(indexNextChild, std::make_shared<entry_t>(nodeA->getNodeMBR(), nodeA));
         node->add(std::make_shared<entry_t>(nodeB->getNodeMBR(), nodeB));
+    }else if(nextChild->isLeaf()){
+        nextEntry->rectangle = rectangle_t::rectangleIncluding(nextEntry->rectangle, rectangle);
+    }else if(prevSize != nextChild->size()){
+        nextEntry->rectangle = nextChild->getNodeMBR();
     }
 }
 
