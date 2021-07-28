@@ -69,3 +69,5 @@ Travel::Travel(const Travel &obj) {
     StartingPoint = obj.StartingPoint;
     ArrivalPoint = obj.ArrivalPoint;
 }
+
+Travel::Travel() = default;
