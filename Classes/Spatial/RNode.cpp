@@ -1,10 +1,7 @@
 #include "RNode.h"
-#define RNODE_TEMPLATE template<typename Point, typename DataType>
-#define RNODE_DEFINITION RNode<Point, DataType>
 
 RNODE_TEMPLATE
 RNode<Point, DataType>::RNode(bool leaf){
-    assert(leaf);
     this->_leaf = leaf;
 }
 
@@ -14,52 +11,67 @@ bool RNODE_DEFINITION::isLeaf(){
 }
 
 RNODE_TEMPLATE
-std::shared_ptr<RNODE_DEFINITION> RNODE_DEFINITION::pickChild(rectangle_t rectangle){
+std::size_t RNODE_DEFINITION::pickChild(rectangle_t rectangle){
     bool firstTime = true;
     double bestArea;
     double bestIncrease;
-    std::size_t bestRectIndex;
-    for(std::size_t i = 0; i < this->_branches.size(); i++){
-        rectangle_t currentRect = this->_branches[i]->rectangle;
-        rectangle_t tempRect = RNODE_DEFINITION::rectangleIncluding(currentRect, rectangle);
+    std::size_t indexChild;
+    for(std::size_t i = 0; i < this->_entries.size(); i++){
+        rectangle_t currentRect = this->_entries[i]->rectangle;
+        rectangle_t tempRect = rectangle_t::rectangleIncluding(currentRect, rectangle);
         double areaCurrentRect = currentRect.getArea();
         double increase = tempRect.getArea() - areaCurrentRect;
         if((increase < bestIncrease) || firstTime ||
             (increase == bestIncrease && areaCurrentRect < bestArea)){
-            bestRectIndex = i;
+            indexChild = i;
             bestArea = areaCurrentRect;
             bestIncrease = increase;
             firstTime = false;
         }
     }
-    return std::get<RNODE_POINTER>(this->_branches[bestRectIndex]->element);
+    return indexChild;
 }
 
 RNODE_TEMPLATE
-void RNODE_DEFINITION::add(rectangle_t rectangle, DataType data){
-    auto branch = std::make_shared<Branch>(rectangle, data);
-    this->_branches.push_back(branch);
+void RNODE_DEFINITION::add(std::shared_ptr<entry_t> entry){
+    this->_entries.push_back(entry);
 }
 
 RNODE_TEMPLATE
 std::size_t RNODE_DEFINITION::size(){ 
-    return _branches.size(); 
+    return _entries.size(); 
 }
 
 RNODE_TEMPLATE
-Rectangle<Point> RNODE_DEFINITION::rectangleIncluding(rectangle_t rectA, rectangle_t rectB){
-    const int x = 0, y = 1;
-    Point min({std::min(rectA._min.get(x), rectB._min.get(x)),
-                   std::min(rectA._min.get(y), rectB._min.get(y))});
-    Point max({std::max(rectA._max.get(x), rectB._max.get(x)),
-                   std::max(rectA._max.get(y), rectB._max.get(y))});
-    return rectangle_t(min, max);
+std::shared_ptr<ENTRY_DEFINITION> RNODE_DEFINITION::getEntry(std::size_t index){
+    assert(0 <= index && index < size());
+    return _entries[index];
 }
 
 RNODE_TEMPLATE
-void RNODE_DEFINITION::createBranch(rectangle_t rectangle, DataType data){
-    auto branch = std::make_shared<Branch>(rectangle, data);
-    this->_branches.push_back(branch);
-    std::cout << _branches[0]->rectangle._min.get(0) << "," << _branches[0]->rectangle._min.get(1) << std::endl;
-    std::cout << std::get<DataType>(_branches[0]->element) << std::endl;
+void RNODE_DEFINITION::popEntry(std::size_t index){
+    assert(0 <= index && index < size());
+    _entries.erase(_entries.begin() + index);
+}
+
+RNODE_TEMPLATE
+void RNODE_DEFINITION::clearEntries(){
+    _entries.clear();
+}
+
+RNODE_TEMPLATE
+Rectangle<Point> RNODE_DEFINITION::getNodeMBR(){
+    assert(!_entries.empty());
+    rectangle_t finalRect = _entries[0]->rectangle;
+    for(std::size_t i = 1; i < _entries.size(); ++i){
+        finalRect = rectangle_t::rectangleIncluding(finalRect, _entries[i]->rectangle);
+    }
+    return finalRect;
+}
+
+RNODE_TEMPLATE
+void RNODE_DEFINITION::setNewEntry(std::size_t index, std::shared_ptr<entry_t> entry){
+    assert(0 <= index && index < _entries.size());
+    _entries[index].reset();
+    _entries[index] = entry;
 }

@@ -10,16 +10,20 @@ class RTree{
 private:
     using rectangle_t = Rectangle<Point>; 
     using node_t = RNode<Point, DataType>;
-
-    void insertUtil(std::shared_ptr<node_t> node, rectangle_t rectangle, DataType data);
+    using entry_t = Entry<node_t, Point, DataType>;
+    void insertRectangle(rectangle_t& rectangle, DataType& data);
+    void insertUtil(std::shared_ptr<node_t> node, rectangle_t& rectangle, DataType& data);
     bool checkRNode(std::shared_ptr<node_t> node);
-    std::pair<node_t, node_t> splitNode(node_t node);
-    std::pair<node_t, node_t> quadraticSplit(node_t node);
-    std::vector<node_t> qPickSeeds(node_t node);
-    void qDistribute(node_t nodeToSplit, node_t nodeA, node_t nodeB);
+    std::pair<std::shared_ptr<node_t>, std::shared_ptr<node_t>> splitNode(std::shared_ptr<node_t> node);
+    std::pair<std::shared_ptr<node_t>, std::shared_ptr<node_t>> quadraticSplit(std::shared_ptr<node_t> node);
+    std::vector<std::shared_ptr<node_t>> qPickSeeds(std::shared_ptr<node_t> node);
+    void qDistribute(std::shared_ptr<node_t> nodeToSplit, std::shared_ptr<node_t> nodeA, std::shared_ptr<node_t> nodeB);
+    std::shared_ptr<entry_t> pickNext(std::shared_ptr<node_t> nodeToSplit, std::shared_ptr<node_t> nodeA, std::shared_ptr<node_t> nodeB);
 public:
-    RTree()= default;
+    RTree(){ assert(MAXNODES >= 2 && MAXNODES > MINNODES); } 
     void insert(Point new_point, DataType data);
+    void insert(Point min, Point max, DataType data);
+    void insert(rectangle_t rectangle, DataType data);
     bool overlap(rectangle_t rect1, rectangle_t rect2);
 private:
     std::shared_ptr<node_t> _root;
