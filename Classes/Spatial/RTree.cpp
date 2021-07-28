@@ -69,17 +69,6 @@ void RTREE_DEFINITION::insert(rectangle_t rectangle, DataType data){
 }
 
 RTREE_TEMPLATE
-bool RTREE_DEFINITION::overlap(rectangle_t rectA, rectangle_t rectB){
-    std::size_t dimension = rectA.getDimension();
-    for(int index = 0; index < dimension; ++index){
-        if (rectA._min.get(index) > rectB._max.get(index) ||
-            rectB._min.get(index) > rectA._max.get(index))
-        return false;
-    }
-  return true;
-}
-
-RTREE_TEMPLATE
 std::pair<std::shared_ptr<RNODE_DEFINITION>, std::shared_ptr<RNODE_DEFINITION>> RTREE_DEFINITION::splitNode(std::shared_ptr<node_t> node){
     assert(node->size() > MAXNODES);
     return quadraticSplit(node);
@@ -174,4 +163,44 @@ std::shared_ptr<ENTRY_DEFINITION> RTREE_DEFINITION::pickNext(std::shared_ptr<nod
     auto entry = nodeToSplit->getEntry(indexEntry);
     nodeToSplit->popEntry(indexEntry);
     return entry;
+}
+
+RTREE_TEMPLATE
+std::vector<DataType> RTREE_DEFINITION::searchRectangle(rectangle_t& rectangle){
+    if(!_root){
+        return std::vector<DataType>();
+    }
+    return searchUtil(_root, rectangle);
+}
+
+RTREE_TEMPLATE
+std::vector<DataType> RTREE_DEFINITION::searchUtil(std::shared_ptr<node_t> node, rectangle_t& rectangle){
+    if(node->isLeaf()){
+        return node->getAllData(rectangle);
+    }
+    std::vector<DataType> result;
+    for(std::size_t i = 0; i < node->size(); i++){
+        if(rectangle_t::overlap(node->getEntry(i)->rectangle, rectangle)){
+            auto childResults = searchUtil(node->getEntry(i)->getChild(), rectangle);
+            result.insert(result.end(), childResults.begin(), childResults.end()); 
+        }
+    }
+    return result;
+}
+
+RTREE_TEMPLATE
+std::vector<DataType> RTREE_DEFINITION::search(Point point){
+    rectangle_t rectangle(point, point);
+    return searchRectangle(rectangle);
+}
+
+RTREE_TEMPLATE
+std::vector<DataType> RTREE_DEFINITION::search(Point min, Point max){
+    rectangle_t rectangle(min, max);
+    return searchRectangle(rectangle);
+}
+
+RTREE_TEMPLATE
+std::vector<DataType> RTREE_DEFINITION::search(rectangle_t rectangle){
+    return searchRectangle(rectangle);
 }

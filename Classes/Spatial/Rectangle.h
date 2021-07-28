@@ -38,6 +38,15 @@ struct Rectangle{
         Rectangle rect = rectangleIncluding(rectA, rectB);
         return rect.getArea() - rectA.getArea();
     }
+    static bool overlap(Rectangle rectA, Rectangle rectB){
+        std::size_t dimension = rectA.getDimension();
+        for(std::size_t index = 0; index < dimension; ++index){
+            if (rectA._min.get(index) > rectB._max.get(index) ||
+                rectB._min.get(index) > rectA._max.get(index))
+            return false;
+        }
+        return true;
+    }
 };
 
 #endif //EDA_PROYECTO_RECTANGLE_H

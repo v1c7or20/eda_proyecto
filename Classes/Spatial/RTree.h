@@ -13,6 +13,8 @@ private:
     using entry_t = Entry<node_t, Point, DataType>;
     void insertRectangle(rectangle_t& rectangle, DataType& data);
     void insertUtil(std::shared_ptr<node_t> node, rectangle_t& rectangle, DataType& data);
+    std::vector<DataType> searchRectangle(rectangle_t& rectangle);
+    std::vector<DataType> searchUtil(std::shared_ptr<node_t> node, rectangle_t& rectangle);
     bool checkRNode(std::shared_ptr<node_t> node);
     std::pair<std::shared_ptr<node_t>, std::shared_ptr<node_t>> splitNode(std::shared_ptr<node_t> node);
     std::pair<std::shared_ptr<node_t>, std::shared_ptr<node_t>> quadraticSplit(std::shared_ptr<node_t> node);
@@ -21,10 +23,12 @@ private:
     std::shared_ptr<entry_t> pickNext(std::shared_ptr<node_t> nodeToSplit, std::shared_ptr<node_t> nodeA, std::shared_ptr<node_t> nodeB);
 public:
     RTree(){ assert(MAXNODES >= 2 && MAXNODES > MINNODES); } 
-    void insert(Point new_point, DataType data);
+    void insert(Point point, DataType data);
     void insert(Point min, Point max, DataType data);
     void insert(rectangle_t rectangle, DataType data);
-    bool overlap(rectangle_t rect1, rectangle_t rect2);
+    std::vector<DataType> search(Point point);
+    std::vector<DataType> search(Point min, Point max);
+    std::vector<DataType> search(rectangle_t rectangle);
 private:
     std::shared_ptr<node_t> _root;
 };
