@@ -5,8 +5,8 @@
 
 template<typename Point>
 struct Rectangle{
-    Point _min;
-    Point _max;
+    Point _min{};
+    Point _max{};
     Rectangle()= default;
     Rectangle(const Rectangle<Point>& rect) : _min(rect._min), _max(rect._max){}
     Rectangle(Point min, Point max):_min(min),_max(max){}
@@ -25,6 +25,18 @@ struct Rectangle{
         this->_min = rect._min;
         this->_max = rect._max;
         return *this;
+    }
+    static Rectangle rectangleIncluding(Rectangle rectA, Rectangle rectB){
+        const int x = 0, y = 1;
+        Point min({std::min(rectA._min.get(x), rectB._min.get(x)),
+                    std::min(rectA._min.get(y), rectB._min.get(y))});
+        Point max({std::max(rectA._max.get(x), rectB._max.get(x)),
+                    std::max(rectA._max.get(y), rectB._max.get(y))});
+        return Rectangle(min, max);
+    }
+    static double areaIncrease(Rectangle rectA, Rectangle rectB) {
+        Rectangle rect = rectangleIncluding(rectA, rectB);
+        return rect.getArea() - rectA.getArea();
     }
 };
 

@@ -7,36 +7,33 @@
 
 #include <vector>
 #include "GlobalConstants.h"
-#include "Travel.h"
-
+#include "Spatial/Point.h"
+#include "Neighborhood.h"
 
 class TravelPoint{
 private:
-    coordinate_t coordinate;
-    bool start{};
-    TravelPoint * next{};
-    Travel * travelInformation{};
-
+    Point<double,2> point;
+    Neighborhood *neighborhood;
+    bool startingPoint;
 public:
-    TravelPoint(coordinate_t coordinate, bool start, address_t travelInformation);
+    TravelPoint(coordinate_t coordinate, bool start);
 
     TravelPoint();
 
-    coordinate_t getCoordinate();
-    bool isStart() const;
-    Travel * getTravelInformation();
-
-    void setCoordinate(const coordinate_t &coordinate);
-
-    void setStart(bool start);
-
-    void setTravelInformation(Travel * travelInformation);
-
-    void setNext(Point *next);
-
     bool isInsidePolygon(std::vector<coordinate_t> polygon) const;
 
-    bool isInsideRectangle(std::pair<float,float>min, std::pair<float,float>max) const:
+    bool isInsideRectangle(std::pair<float,float>min, std::pair<float,float>max) const;
+
+    const Point<double, 2> &getPoint() const;
+
+    Neighborhood *getNeighborhood() const;
+
+    void setNext(TravelPoint *next);
+
+    bool isStartingPoint() const;
+
+    void setNeighborhood(Neighborhood *neighborhood);
+
 };
 
 #endif //EDA_PROYECTO_TRAVELPOINT_H

@@ -2,9 +2,9 @@
 // Created by msi on 8/07/2021.
 //
 
-#include "PointParser.h"
+#include "TravelParser.h"
 
-PointParser::PointParser(std::string filename) : filename(filename) {
+TravelParser::TravelParser(std::string filename) : filename(filename) {
     std::ifstream reader;
     reader.open(this->filename,std::ios::in);
     std::string linea;
@@ -13,9 +13,6 @@ PointParser::PointParser(std::string filename) : filename(filename) {
 
         std::stringstream registro(linea);
         std::string dato;
-
-        Point * newPointStart = new Point;
-        Point * newPointEnd = new Point;
 
         double startX, startY, endX, endY;
 
@@ -36,16 +33,14 @@ PointParser::PointParser(std::string filename) : filename(filename) {
                     break;
                 case 6: // Pickup_latitude
                     startY = std::stod(dato);
-                    newPointStart->setCoordinate({startX, startY});
-                    newPointStart->setStart(true);
+                    newTravel->setStartingPint(TravelPoint({startX,startX},true) );
                     break;
                 case 7: // Dropoff_longitude
                     endX = std::stod(dato);
                     break;
                 case 8: // Dropoff_latitude
                     endY = std::stod(dato);
-                    newPointEnd->setCoordinate({endX, endY});
-                    newPointEnd->setStart(false);
+                    newTravel->setArrivalPoint(TravelPoint({endX, endY}, false));
                     break;
                 case 9: // Passenger Count
                     newTravel->setPassengerCount(std::stoi(dato));
@@ -60,14 +55,9 @@ PointParser::PointParser(std::string filename) : filename(filename) {
                     break;
             }
         }
-        newPointStart->setNext(newPointEnd);
-        newPointStart->setTravelInformation(newTravel);
-        newPointEnd->setNext(newPointStart);
-        newPointEnd->setTravelInformation(newTravel);
-        points.push_back(newPointEnd);
-        points.push_back(newPointStart);
+        travels.push_back(newTravel);
     }
 }
-std::vector<Point *> &PointParser::getPoints(){
-    return points;
+std::vector<Travel *> & TravelParser::getTravels(){
+    return travels;
 }

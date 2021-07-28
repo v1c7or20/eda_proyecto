@@ -43,3 +43,19 @@ void Travel::setTripDistance(double tripDistance) {
 void Travel::setFareAmount(double fareAmount) {
     Travel::fareAmount = fareAmount;
 }
+
+TravelPoint &Travel::getStartingPoint() {
+    return StartingPoint;
+}
+
+TravelPoint &Travel::getArrivalPoint() {
+    return ArrivalPoint;
+}
+
+void Travel::setStartingPint(const TravelPoint &startingPint) {
+    StartingPoint = startingPint;
+}
+
+void Travel::setArrivalPoint(const TravelPoint &arrivalPoint) {
+    ArrivalPoint = arrivalPoint;
+}
