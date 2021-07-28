@@ -6,40 +6,29 @@
 #include <cstdint>
 #include <memory>
 #include <variant>
-#include "Rectangle.h"
-#define RNODE_POINTER 0
+#include "Definitions.h"
+#include "Entry.h"
 
 template<typename Point, typename DataType>
 class RNode{
 private:
     using rectangle_t = Rectangle<Point>;
-protected:
-    struct Branch{
-        rectangle_t rectangle;
-        std::variant<std::shared_ptr<RNode>, DataType> element;
-        Branch()= default;
-        Branch(rectangle_t rectangle, std::shared_ptr<RNode> child){
-            this->rectangle = rectangle;
-            this->element = child;
-        }
-        Branch(rectangle_t rectangle, DataType data){
-            this->rectangle = rectangle;
-            this->element = data;
-        }
-    };
-private:
-    std::shared_ptr<RNode> pickChild(rectangle_t rectangle);
+    using entry_t = Entry<RNode, Point, DataType>;
 public:
-    RNode()= default;
+    RNode()=default;
     explicit RNode(bool leaf);
     bool isLeaf();
-    void add(rectangle_t rectangle, DataType data);
+    std::size_t pickChild(rectangle_t rectangle);
+    void add(std::shared_ptr<entry_t> entry);
     std::size_t size();
-    static rectangle_t rectangleIncluding(rectangle_t rectA, rectangle_t rectB);
-    void createBranch(rectangle_t rectangle, DataType data);
+    std::shared_ptr<entry_t> getEntry(std::size_t index);
+    void popEntry(std::size_t index);
+    void clearEntries();
+    rectangle_t getNodeMBR();
+    void setNewEntry(std::size_t index, std::shared_ptr<entry_t> entry);
 private:
     bool _leaf{};
-    std::vector<std::shared_ptr<Branch>> _branches;
+    std::vector<std::shared_ptr<entry_t>> _entries;
 };
 
 #endif // EDA_PROYECTO_RNODE_H
