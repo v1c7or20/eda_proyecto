@@ -59,3 +59,13 @@ void Travel::setStartingPint(const TravelPoint &startingPint) {
 void Travel::setArrivalPoint(const TravelPoint &arrivalPoint) {
     ArrivalPoint = arrivalPoint;
 }
+
+Travel::Travel(const Travel &obj) {
+    pickupDate = obj.pickupDate;
+    dropoffDate = obj.dropoffDate;
+    passengerCount = obj.passengerCount;
+    tripDistance = obj.tripDistance;
+    fareAmount = obj.fareAmount;
+    StartingPoint = obj.StartingPoint;
+    ArrivalPoint = obj.ArrivalPoint;
+}

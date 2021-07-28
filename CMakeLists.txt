@@ -2,6 +2,26 @@ cmake_minimum_required(VERSION 3.19)
 project(EDA_proyecto)
 set(CMAKE_CXX_STANDARD 17)
 include(FetchContent)
+
+
+function(download_file url filename hash_type hash)
+
+    if(NOT EXISTS ${filename})
+        file(DOWNLOAD ${url} ${filename}
+                TIMEOUT 60  # seconds
+                EXPECTED_HASH ${hash_type}=${hash})
+    endif()
+
+endfunction(download_file)
+
+
+# === example
+download_file(
+        https://s3.amazonaws.com/nyc-tlc/trip+data/green_tripdata_2015-01.csv
+        ./green_tripdata_2015-01.csv
+        SHA256 70F272893AFDAC822853AAE07FFCBF8C0EA5364E0988BB4E50506C2244C1B988 )
+
+
 FetchContent_Declare(json
         GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
         )
