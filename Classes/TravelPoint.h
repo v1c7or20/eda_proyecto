@@ -18,6 +18,8 @@ private:
 public:
     TravelPoint(coordinate_t coordinate, bool start);
 
+    TravelPoint(const TravelPoint &obj);
+
     TravelPoint();
 
     bool isInsidePolygon(std::vector<coordinate_t> polygon) const;

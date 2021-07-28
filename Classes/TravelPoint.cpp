@@ -47,3 +47,8 @@ void TravelPoint::setNeighborhood(Neighborhood *neighborhood) {
     TravelPoint::neighborhood = neighborhood;
 }
 
+TravelPoint::TravelPoint(const TravelPoint &obj) {
+    point = obj.point;
+    neighborhood = obj.neighborhood;
+    startingPoint = obj.startingPoint;
+}
