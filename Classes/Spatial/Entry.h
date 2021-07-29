@@ -28,6 +28,10 @@ public:
     DataType getData(){
         return std::get<DataType>(element);
     }
+
+    rectangle_t getRectangle(){
+        return this->rectangle;
+    }
 };
 
 #endif // EDA_PROYECTO_BRANCH_H
