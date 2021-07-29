@@ -3,8 +3,7 @@
 
 RTREE_TEMPLATE
 bool RTREE_DEFINITION::checkRNode(std::shared_ptr<node_t> node){
-    if(node->size() <= MAXNODES) return true;
-    return false;
+    return node->size() <= MAXNODES;
 }
 
 RTREE_TEMPLATE

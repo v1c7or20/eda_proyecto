@@ -1,5 +1,13 @@
 #include <gtest/gtest.h>
 #include <iostream>
+
+// spatial
+#include "../Classes/Spatial/Point.h"
+#include "../Classes/Spatial/Rectangle.h"
+#include "../Classes/Spatial/RNode.h"
+#include "../Classes/Spatial/RTree.h"
+
+
 #include "../Classes/Neighborhood.h"
 #include "../Classes/TravelPoint.h"
 #include "../Classes/Travel.h"
@@ -56,6 +64,50 @@ TEST_F(ParserTests, nonExistantOrEmptyFile) {
       TP tp = TP("./../badfile.csvv");
   }, std::invalid_argument);
 }
+
+class RTreeTests : public ::testing::Test {
+  protected:
+    using data_t = int;
+    using point_t = Point<int, 2>;
+    using rectangle_t = Rectangle<point_t>;
+    using rnode_t = RNode<point_t, int>;
+    using rtree_t = RTree<point_t, int, 4, 2>;
+    rtree_t rtree;
+};
+
+TEST_F(RTreeTests, emptyPointSearch) {
+  point_t queryp({1,1});
+  auto result = rtree.search(queryp).size();
+  //EXPECT_EQ(result, 0);
+}
+/*
+TEST_F(RTreeTests, emptyRectSearch) {
+  point_t queryP({1,1});
+  auto result = rtree.search(queryP).size();
+  EXPECT_EQ(result, 0);
+}
+
+TEST_F(RTreeTests, emptyRectPointSearch) {
+  point_t queryP({1,1});
+  point_t queryP2({2,2});
+  auto result = rtree.search(queryP, queryP2).size()
+  EXPECT_EQ(result,  0);
+}
+
+TEST_F(RTreeTests, emptyRectangleSearch) {
+  rectangle_t queryR(point_t({1,1}), point_t({2,2}));
+  auto result = rtree.search(queryR).size()
+  EXPECT_EQ(result, 0);
+}
+*/
+/*
+TEST_F(RTreeTests, insert) {
+  point_t P1({1,1});
+  rtree.insert(P1,1);
+}
+*/
+
+
 // class QuadTreeParamTest : public ::testing::TestWithParam<std::size_t> {
 //   protected:
 //     using data_t = int;
