@@ -19,8 +19,8 @@ std::size_t RNODE_DEFINITION::pickChild(rectangle_t rectangle){
     for(std::size_t i = 0; i < this->_entries.size(); i++){
         rectangle_t currentRect = this->_entries[i]->rectangle;
         rectangle_t tempRect = rectangle_t::rectangleIncluding(currentRect, rectangle);
-        double areaCurrentRect = currentRect.getArea();
-        double increase = tempRect.getArea() - areaCurrentRect;
+        double areaCurrentRect = currentRect.getRegion(false);
+        double increase = tempRect.getRegion(false) - areaCurrentRect;
         if((increase < bestIncrease) || firstTime ||
             (increase == bestIncrease && areaCurrentRect < bestArea)){
             indexChild = i;

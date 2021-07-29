@@ -106,7 +106,7 @@ TEST_F(RTreeTests, insertOne) {
   auto rect = entry->getRectangle();
 
   EXPECT_EQ(data, 1);
-  EXPECT_EQ(rect.getArea(), 0);
+  EXPECT_EQ(rect.getRegion(false), 0);
 }
 
 TEST_F(RTreeTests, insertMultipleNoSplit){

@@ -20,7 +20,7 @@ struct Rectangle{
         for(std::size_t i = 0; i < getDimension(); ++i){
             double side = abs(_max.get(i) - _min.get(i));
             if(side == 0 && !nullRegion)
-                side = 1;
+                side = 0.0000001;
             region *= side;
         }
         return region;
@@ -40,7 +40,7 @@ struct Rectangle{
     }
     static double areaIncrease(Rectangle rectA, Rectangle rectB) {
         Rectangle rect = rectangleIncluding(rectA, rectB);
-        return rect.getArea() - rectA.getArea();
+        return rect.getRegion(false) - rectA.getRegion(false);
     }
     static bool overlap(Rectangle rectA, Rectangle rectB){
         std::size_t dimension = rectA.getDimension();

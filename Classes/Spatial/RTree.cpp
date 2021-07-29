@@ -98,7 +98,7 @@ std::vector<std::shared_ptr<RNODE_DEFINITION>> RTREE_DEFINITION::qPickSeeds(std:
             rectangle_t rectA = node->getEntry(i)->rectangle;
             rectangle_t rectB = node->getEntry(j)->rectangle;
             rectangle_t r = rectangle_t::rectangleIncluding(rectA, rectB);
-            double area = r.getArea() - rectA.getArea() - rectB.getArea();
+            double area = r.getRegion(false) - rectA.getRegion(false) - rectB.getRegion(false);
             if(area > maxArea){
                 maxArea = area;
                 entryIndexA = i;
@@ -129,9 +129,9 @@ void RTREE_DEFINITION::qDistribute(std::shared_ptr<node_t> nodeToSplit, std::sha
             nodeA->add(entry);
         }else if(areaB < areaA){
             nodeB->add(entry);
-        }else if(mbrA.getArea() < mbrB.getArea()){
+        }else if(mbrA.getRegion(false) < mbrB.getRegion(false)){
             nodeA->add(entry);
-        }else if(mbrB.getArea() < mbrA.getArea()){
+        }else if(mbrB.getRegion(false) < mbrA.getRegion(false)){
             nodeB->add(entry);
         }else if(nodeA->size() < nodeB->size()){
             nodeA->add(entry);
