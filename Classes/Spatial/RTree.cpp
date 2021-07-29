@@ -1,10 +1,14 @@
 #include "RTree.h"
+#include "RNode.h"
 
+RTREE_TEMPLATE
+std::shared_ptr<RNode<Point, DataType>> RTREE_DEFINITION::getRoot(){
+  return this->_root;
+}
 
 RTREE_TEMPLATE
 bool RTREE_DEFINITION::checkRNode(std::shared_ptr<node_t> node){
-    if(node->size() <= MAXNODES) return true;
-    return false;
+    return node->size() <= MAXNODES;
 }
 
 RTREE_TEMPLATE

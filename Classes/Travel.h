@@ -42,6 +42,7 @@ public:
     void setArrivalPoint(const TravelPoint &arrivalPoint);
 
     Travel(const Travel &obj);
+
 private:
     std::string pickupDate;
     std::string dropoffDate;

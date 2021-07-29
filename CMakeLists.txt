@@ -18,7 +18,7 @@ endfunction(download_file)
 # === example
 download_file(
         https://s3.amazonaws.com/nyc-tlc/trip+data/green_tripdata_2015-01.csv
-        ./green_tripdata_2015-01.csv
+        ./../green_tripdata_2015-01.csv
         SHA256 70F272893AFDAC822853AAE07FFCBF8C0EA5364E0988BB4E50506C2244C1B988)
 
 
@@ -46,6 +46,8 @@ add_executable(
   Classes/TravelPoint.cpp
   Classes/Travel.cpp
   Classes/Neighborhood.cpp
+  Classes/Spatial/RNode.cpp
+  Classes/Spatial/RTree.cpp
   Parser/NeighborhoodParser.cpp
   Parser/TravelParser.cpp
   )
