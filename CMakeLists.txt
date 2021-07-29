@@ -46,6 +46,8 @@ add_executable(
   Classes/TravelPoint.cpp
   Classes/Travel.cpp
   Classes/Neighborhood.cpp
+  Classes/Spatial/RNode.cpp
+  Classes/Spatial/RTree.cpp
   Parser/NeighborhoodParser.cpp
   Parser/TravelParser.cpp
   )

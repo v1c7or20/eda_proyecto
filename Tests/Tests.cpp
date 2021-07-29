@@ -1,5 +1,13 @@
 #include <gtest/gtest.h>
 #include <iostream>
+
+// spatial
+#include "../Classes/Spatial/Point.h"
+#include "../Classes/Spatial/Rectangle.h"
+#include "../Classes/Spatial/Entry.h"
+#include "../Classes/Spatial/RNode.cpp"
+#include "../Classes/Spatial/RTree.cpp"
+
 #include "../Classes/Neighborhood.h"
 #include "../Classes/TravelPoint.h"
 #include "../Classes/Travel.h"
@@ -56,6 +64,110 @@ TEST_F(ParserTests, nonExistantOrEmptyFile) {
       TP tp = TP("./../badfile.csvv");
   }, std::invalid_argument);
 }
+
+class RTreeTests : public ::testing::Test {
+  protected:
+    using data_t = int;
+    using point_t = Point<int, 2>;
+    using rectangle_t = Rectangle<point_t>;
+    using rnode_t = RNode<point_t, int>;
+    using rtree_t = RTree<point_t, int, 4, 2>;
+    rtree_t rtree;
+};
+
+TEST_F(RTreeTests, emptyPointSearch) {
+  point_t queryp({1,1});
+  auto result = rtree.search(queryp).size();
+  EXPECT_EQ(result, 0);
+}
+
+TEST_F(RTreeTests, emptyRectPointSearch) {
+  point_t queryP({1,1});
+  point_t queryP2({2,2});
+  auto result = rtree.search(queryP, queryP2).size();
+  EXPECT_EQ(result,  0);
+}
+
+TEST_F(RTreeTests, emptyRectangleSearch) {
+  rectangle_t queryR(point_t({1,1}), point_t({2,2}));
+  auto result = rtree.search(queryR).size();
+  EXPECT_EQ(result, 0);
+}
+
+TEST_F(RTreeTests, insertOne) {
+  point_t P1({1,1});
+  rtree.insert(P1,1);
+  auto root = rtree.getRoot();
+  ASSERT_TRUE(root->isLeaf());
+  EXPECT_EQ(root->size(), 1);
+
+  auto entry = root->getEntry(0);
+  auto data = entry->getData();
+  auto rect = entry->getRectangle();
+
+  EXPECT_EQ(data, 1);
+  EXPECT_EQ(rect.getArea(), 0);
+}
+
+TEST_F(RTreeTests, insertMultipleNoSplit){
+  point_t P1({1, 1}), P2({2, 11}), P3({6, 10});
+  rtree.insert(P1, 1);
+  rtree.insert(P2, 2);
+  rtree.insert(P3, 3);
+  auto root = rtree.getRoot();
+  ASSERT_TRUE(root->isLeaf());
+  EXPECT_EQ(root->size(), 3);
+  auto entry = root->getEntry(0);
+
+  for(int i = 0; i < 3; ++i){
+    entry = root->getEntry(i);
+    EXPECT_EQ(entry->getData(), i+1);
+  }
+}
+
+TEST_F(RTreeTests, insertMultipleWithSplit) {
+  const int x = 0, y = 1;
+  point_t P1({1, 1}), P2({2, 11}), P3({6, 10}), P4({1, 9}), P5({1, 13});
+  rtree.insert(P1, 1);
+  rtree.insert(P2, 2);
+  rtree.insert(P3, 3);
+	rtree.insert(P4, 4);
+	rtree.insert(P5, 5);
+
+  auto root = rtree.getRoot();
+  ASSERT_FALSE(root->isLeaf());
+  EXPECT_EQ(root->size(), 2);
+
+  auto entry = root->getEntry(0);
+  rectangle_t r1 = entry->getRectangle();
+  auto _x = r1._min.get(x);
+  auto _y = r1._min.get(y);
+  EXPECT_EQ(_x, 1);
+  EXPECT_EQ(_y, 1);
+  _x = r1._max.get(x);
+  _y = r1._max.get(y);
+  EXPECT_EQ(_x, 1);
+  EXPECT_EQ(_y, 13);
+
+  entry = root->getEntry(1);
+  r1 = entry->getRectangle();
+  _x = r1._min.get(x);
+  _y = r1._min.get(y);
+  EXPECT_EQ(_x, 2);
+  EXPECT_EQ(_y, 10);
+  _x = r1._max.get(x);
+  _y = r1._max.get(y);
+  EXPECT_EQ(_x, 6);
+  EXPECT_EQ(_y, 11);
+  
+/*
+  for(int i = 0; i < 3; ++i){
+    entry = root->getEntry(i);
+    EXPECT_EQ(entry->getData(), i+1);
+  }
+}*/
+}
+
 // class QuadTreeParamTest : public ::testing::TestWithParam<std::size_t> {
 //   protected:
 //     using data_t = int;
