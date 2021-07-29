@@ -159,15 +159,43 @@ TEST_F(RTreeTests, insertMultipleWithSplit) {
   _y = r1._max.get(y);
   EXPECT_EQ(_x, 6);
   EXPECT_EQ(_y, 11);
-  
-/*
-  for(int i = 0; i < 3; ++i){
-    entry = root->getEntry(i);
-    EXPECT_EQ(entry->getData(), i+1);
-  }
-}*/
 }
 
+TEST_F(RTreeTests, insertMultipleInline) {
+  const int x = 0, y = 1;
+  point_t P1({1, 1}), P2({1, 11}), P3({1, 9}), P4({1, 13}), P5({1, 2});
+  rtree.insert(P1, 1);
+  rtree.insert(P2, 2);
+  rtree.insert(P3, 3);
+	rtree.insert(P4, 4);
+	rtree.insert(P5, 5);
+
+  auto root = rtree.getRoot();
+  ASSERT_FALSE(root->isLeaf());
+  EXPECT_EQ(root->size(), 2);
+
+  auto entry = root->getEntry(0);
+  rectangle_t r1 = entry->getRectangle();
+  auto _x = r1._min.get(x);
+  auto _y = r1._min.get(y);
+  EXPECT_EQ(_x, 1);
+  EXPECT_EQ(_y, 1);
+  _x = r1._max.get(x);
+  _y = r1._max.get(y);
+  EXPECT_EQ(_x, 1);
+  EXPECT_EQ(_y, 2);
+
+  entry = root->getEntry(1);
+  r1 = entry->getRectangle();
+  _x = r1._min.get(x);
+  _y = r1._min.get(y);
+  EXPECT_EQ(_x, 1);
+  EXPECT_EQ(_y, 9);
+  _x = r1._max.get(x);
+  _y = r1._max.get(y);
+  EXPECT_EQ(_x, 1);
+  EXPECT_EQ(_y, 13);
+}
 // class QuadTreeParamTest : public ::testing::TestWithParam<std::size_t> {
 //   protected:
 //     using data_t = int;
