@@ -14,12 +14,16 @@ struct Rectangle{
         assert(_min.size() == _max.size());
         return this->_min.size();
     }
-    double getArea(){
-        assert(getDimension() == 2);
-        const int x = 0, y = 1;
-        double width = abs(_max.get(x) - _min.get(x));
-        double height = abs(_max.get(y) - _min.get(y));
-        return width * height;
+    double getRegion(bool nullRegion = true){
+        if(_min == _max) return 0;
+        double region = 1;
+        for(std::size_t i = 0; i < getDimension(); ++i){
+            double side = abs(_max.get(i) - _min.get(i));
+            if(side == 0 && !nullRegion)
+                side = 1;
+            region *= side;
+        }
+        return region;
     }
     Rectangle& operator=(const Rectangle& rect){
         this->_min = rect._min;
