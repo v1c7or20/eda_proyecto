@@ -196,6 +196,32 @@ TEST_F(RTreeTests, insertMultipleInline) {
   EXPECT_EQ(_x, 1);
   EXPECT_EQ(_y, 13);
 }
+
+TEST_F(RTreeTests, searchQuery) {
+	point_t P1({1, 1}), P2({2, 11}), P3({6, 10}), P4({1, 9}), P5({1, 13}),
+					P6({2, 9}), P7({8, 1}), P8({4, 8}), P9({2, 4}), P10({4, 10}),
+					P11({6, 3}), P12({6, 1}), P13({2, 2}), P14({7, 5}), P15({7, 2});
+	rtree.insert(P1, 1);
+	rtree.insert(P2, 2);
+	rtree.insert(P3, 3);
+	rtree.insert(P4, 4);
+	rtree.insert(P5, 5);
+	rtree.insert(P6, 6);
+	rtree.insert(P7, 7);
+	rtree.insert(P8, 8);
+	rtree.insert(P9, 9);
+	rtree.insert(P10, 10);
+	rtree.insert(P11, 11);
+	rtree.insert(P12, 12);
+	rtree.insert(P13, 13);
+	rtree.insert(P14, 14);
+	rtree.insert(P15, 15);
+	rectangle_t query(point_t({0, 8}), point_t({3, 12}));
+	auto result = rtree.search(query);
+  EXPECT_EQ(result.size(), 3);
+}
+
+
 // class QuadTreeParamTest : public ::testing::TestWithParam<std::size_t> {
 //   protected:
 //     using data_t = int;
