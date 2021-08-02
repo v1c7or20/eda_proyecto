@@ -30,7 +30,7 @@ public:
     std::vector<DataType> search(Point min, Point max);
     std::vector<DataType> search(rectangle_t rectangle);
     std::shared_ptr<node_t> getRoot();
-
+    ~RTree();
 private:
     std::shared_ptr<node_t> _root;
 };

@@ -208,3 +208,11 @@ RTREE_TEMPLATE
 std::vector<DataType> RTREE_DEFINITION::search(rectangle_t rectangle){
     return searchRectangle(rectangle);
 }
+
+RTREE_TEMPLATE
+RTREE_DEFINITION::~RTree(){
+    if(_root){
+        _root->killSelf();
+        _root.reset();
+    }
+}

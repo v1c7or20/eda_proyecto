@@ -85,3 +85,18 @@ std::vector<DataType> RNODE_DEFINITION::getAllData(rectangle_t rectangle){
     }
     return result;
 }
+
+RNODE_TEMPLATE
+void RNODE_DEFINITION::killSelf(){
+    if(isLeaf()){
+        for(std::size_t i = 0; i < _entries.size(); ++i){
+            _entries[i].reset();
+        }
+    }else{
+        for(std::size_t i = 0; i < _entries.size(); ++i){
+            _entries[i]->getChild()->killSelf();
+            _entries[i].reset();
+        }
+    }
+    _entries.clear();
+}
