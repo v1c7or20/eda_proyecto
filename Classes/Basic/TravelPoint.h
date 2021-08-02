@@ -1,13 +1,8 @@
-//
-// Created by msi on 6/07/2021.
-//
-
 #ifndef EDA_PROYECTO_TRAVELPOINT_H
 #define EDA_PROYECTO_TRAVELPOINT_H
 
 #include <vector>
-#include "GlobalConstants.h"
-#include "Spatial/Point.h"
+#include "../Spatial/Point.h"
 #include "Neighborhood.h"
 
 class TravelPoint{

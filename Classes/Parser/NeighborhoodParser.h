@@ -8,8 +8,8 @@
 #include <string>
 #include <fstream>
 #include <iostream>
-#include "../Classes/Neighborhood.h"
-#include "../Classes/Spatial/Rectangle.h"
+#include "../Basic/Neighborhood.h"
+#include "../Spatial/Rectangle.h"
 #include <nlohmann/json.hpp>
 
 class NeighborhoodParser {

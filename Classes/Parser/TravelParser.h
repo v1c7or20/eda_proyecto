@@ -5,7 +5,7 @@
 #ifndef EDA_PROYECTO_POINT_PARSER_H
 #define EDA_PROYECTO_POINT_PARSER_H
 
-#include "../Classes/Travel.h"
+#include "../Basic/Travel.h"
 
 #include <string>
 #include <vector>

@@ -8,10 +8,10 @@
 #include "../Classes/Spatial/RNode.cpp"
 #include "../Classes/Spatial/RTree.cpp"
 
-#include "../Classes/Neighborhood.h"
-#include "../Classes/TravelPoint.h"
-#include "../Classes/Travel.h"
-#include "../Parser/TravelParser.h"
+#include "../Classes/Basic/Neighborhood.h"
+#include "../Classes/Basic/TravelPoint.h"
+#include "../Classes/Basic/Travel.h"
+#include "../Classes/Parser/TravelParser.h"
 
 
 class DataClassesTest : public ::testing::Test {

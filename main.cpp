@@ -1,5 +1,5 @@
-#include "Parser/NeighborhoodParser.h"
-#include "Parser/TravelParser.h"
+#include "Classes/Parser/NeighborhoodParser.h"
+#include "Classes/Parser/TravelParser.h"
 #include "Tests/Tests.cpp"
 
 using point_t = Point<double, 2>;

@@ -1,13 +1,8 @@
-//
-// Created by msi on 6/07/2021.
-//
-
 #ifndef EDA_PROYECTO_NEIGHBORHOOD_H
 #define EDA_PROYECTO_NEIGHBORHOOD_H
 
-#include "GlobalConstants.h"
-#include "Spatial/Point.h"
-#include "Spatial/Rectangle.h"
+#include "../Spatial/Point.h"
+#include "../Spatial/Rectangle.h"
 #include <vector>
 
 class Neighborhood{
