@@ -9,15 +9,19 @@
 #include <fstream>
 #include <iostream>
 #include "../Classes/Neighborhood.h"
+#include "../Classes/Spatial/Rectangle.h"
 #include <nlohmann/json.hpp>
 
 class NeighborhoodParser {
 private:
-    std::string filename;
-    std::vector<Neighborhood> neighborhoods;
+    using point_t = Point<double, 2>;
+    using rectangle_t = Rectangle<point_t>;
 public:
     NeighborhoodParser(std::string filename);
-    std::vector<Neighborhood> &getNeighborhoods();
+    std::vector<Neighborhood*> &getNeighborhoods();
+private:
+    std::string filename;
+    std::vector<Neighborhood*> neighborhoods;
 };
 
 

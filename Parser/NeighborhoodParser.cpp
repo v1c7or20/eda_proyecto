@@ -11,8 +11,11 @@ using json = nlohmann::json;
 
 NeighborhoodParser::NeighborhoodParser(std::string filename) : filename(filename) {
     std::ifstream reader(filename);
+    if(!reader.is_open()){
+        throw std::invalid_argument( "File not found" );
+    }
     json data;
-    reader>>data;
+    reader >> data;
     for (json::iterator it = data.begin(); it != data.end(); ++it) {
 
         if(DEBUG_BASIC){
@@ -20,21 +23,21 @@ NeighborhoodParser::NeighborhoodParser(std::string filename) : filename(filename
         }
 
         auto coordinates = it->at("geometry").at("coordinates");
-        std::vector<coordinate_t> coordinates_vector;
+        std::vector<point_t> coordinates_vector(coordinates.size());
         std::string name = it->at("neighborhood");
+        std:size_t i = 0;
         for (json::iterator coord = coordinates.begin(); coord != coordinates.end() ; coord++) {
-            coordinate_t coordinate = {coord->at(0), coord->at(1)};
-            coordinates_vector.push_back(coordinate);
+            coordinates_vector[i] = point_t({coord->at(0), coord->at(1)});;
             if (DEBUG_BASIC){
                 std::cout<<coord->at(1)<<" ";
             }
+            ++i;
         }
-        Neighborhood newNeighborhood(coordinates_vector, name);
+        Neighborhood* newNeighborhood = new Neighborhood(coordinates_vector, name);
         neighborhoods.push_back(newNeighborhood);
     }
 }
 
-
-std::vector<Neighborhood> &NeighborhoodParser::getNeighborhoods(){
+std::vector<Neighborhood*> &NeighborhoodParser::getNeighborhoods(){
     return neighborhoods;
 }
