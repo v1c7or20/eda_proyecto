@@ -7,32 +7,7 @@ Solver::Solver(std::vector<Travel*>& travels, std::vector<Neighborhood*>& neighb
         mapping[neighborhood] = 0;
     }
     for(auto& travel : travels){
-        auto startingPoint = travel->getStartingPoint();
-        auto arrivalPoint = travel->getArrivalPoint();
-        auto result = neighborhoodsRTree.search(startingPoint.getPoint());
-        for(auto& neighborhood : result){
-            if(startingPoint.isInsidePolygon(neighborhood->getPolygon())){
-                mapping[neighborhood] += 1;
-                startingPoint.setNeighborhood(neighborhood);
-                break;
-            }
-        }
-
-        result = neighborhoodsRTree.search(arrivalPoint.getPoint());
-        for(auto& neighbor : result){
-            if(arrivalPoint.isInsidePolygon(neighborhood->getPolygon())){
-                arrivalPoint.setNeighborhood(neighborhood);
-                break;
-            }
-        }
-        
-        if(startingPoint.getNeighborhood()->getName() == 
-            arrivalPoint.getNeighborhood()->getName()){
-            queryResult1.push_back(travel);
-        }
-
-        travelsRTreeBySP.insert(startingPoint.getPoint(), travel);
-        travelsRTreeByAP.insert(arrivalPoint.getPoint(), travel);
+        addTravel(travel);
     }
 }
 
@@ -72,4 +47,33 @@ std::vector<Travel*> Solver::query4(point_t point, double distance){
     auto result2 = travelsRTreeByAP.rangeSearch(point, distance);
     result1.insert(result1.end(), result2.begin(), result2.end());
     return result1;
+}
+
+void Solver::addTravel(Travel* travel){
+    auto startingPoint = travel->getStartingPoint();
+    auto arrivalPoint = travel->getArrivalPoint();
+    auto result = neighborhoodsRTree.search(startingPoint.getPoint());
+    for(auto& neighborhood : result){
+        if(startingPoint.isInsidePolygon(neighborhood->getPolygon())){
+            mapping[neighborhood] += 1;
+            startingPoint.setNeighborhood(neighborhood);
+            break;
+        }
+    }
+
+    result = neighborhoodsRTree.search(arrivalPoint.getPoint());
+    for(auto& neighbor : result){
+        if(arrivalPoint.isInsidePolygon(neighborhood->getPolygon())){
+            arrivalPoint.setNeighborhood(neighborhood);
+            break;
+        }
+    }
+    
+    if(startingPoint.getNeighborhood()->getName() == 
+        arrivalPoint.getNeighborhood()->getName()){
+        queryResult1.push_back(travel);
+    }
+
+    travelsRTreeBySP.insert(startingPoint.getPoint(), travel);
+    travelsRTreeByAP.insert(arrivalPoint.getPoint(), travel);
 }
