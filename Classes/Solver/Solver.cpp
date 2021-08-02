@@ -62,7 +62,7 @@ void Solver::addTravel(Travel* travel){
     }
 
     result = neighborhoodsRTree.search(arrivalPoint.getPoint());
-    for(auto& neighbor : result){
+    for(auto& neighborhood : result){
         if(arrivalPoint.isInsidePolygon(neighborhood->getPolygon())){
             arrivalPoint.setNeighborhood(neighborhood);
             break;
