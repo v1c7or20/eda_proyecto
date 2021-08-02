@@ -48,6 +48,8 @@ add_executable(
   Classes/Neighborhood.cpp
   Classes/Spatial/RNode.cpp
   Classes/Spatial/RTree.cpp
+  Classes/Spatial/Point.h
+  Classes/Spatial/Rectangle.h
   Parser/NeighborhoodParser.cpp
   Parser/TravelParser.cpp
   )

@@ -6,29 +6,30 @@
 
 TravelPoint::TravelPoint() = default;
 
-TravelPoint::TravelPoint(coordinate_t coordinate, bool start){
-    this->point = Point<double,2>({coordinate.first,coordinate.second});
+TravelPoint::TravelPoint(point_t coordinate, bool start){
+    this->point = coordinate;
     this->startingPoint = start;
 }
 
-bool TravelPoint::isInsidePolygon(std::vector<coordinate_t> polygon) const {
-
+bool TravelPoint::isInsidePolygon(std::vector<point_t> polygon) const {
     unsigned int i, j=polygon.size()-1 ;
-    bool  oddNodes= false      ;
+    bool oddNodes = false;
 
     for (i=0; i<polygon.size(); i++) {
-        if ((polygon[i].second< this->point.get(1) && polygon[j].second>=this->point.get(1)
-             ||   polygon[j].second< this->point.get(1) && polygon[i].second>=this->point.get(1))
-            &&  (polygon[i].first<=this->point.get(0) || polygon[j].first<=this->point.get(0))) {
-            oddNodes^=(polygon[i].first+(this->point.get(1)-polygon[i].second)/(polygon[j].second-polygon[i].second)*(polygon[j].first-polygon[i].first)<this->point.get(0)); }
-        j=i; }
+        if ((polygon[i][1]< this->point.get(1) && polygon[j][1]>=this->point.get(1)
+             ||   polygon[j][1]< this->point.get(1) && polygon[i][1]>=this->point.get(1))
+            &&  (polygon[i][0]<=this->point.get(0) || polygon[j][0]<=this->point.get(0))) {
+            oddNodes^=(polygon[i][0]+(this->point.get(1)-polygon[i][1])/(polygon[j][1]-polygon[i][1])*(polygon[j][0]-polygon[i][0])<this->point.get(0)); 
+            }
+        j=i; 
+    }
 
     return oddNodes;
 }
 
-bool TravelPoint::isInsideRectangle(std::pair<float, float> min, std::pair<float, float> max) const {
-    return (min.first <= this->point.get(0) and this->point.get(0) <= max.first
-    and min.second <= this->point.get(1) and this->point.get(1) <= max.second);
+bool TravelPoint::isInsideRectangle(point_t min, point_t max) const {
+    return (min[0] <= this->point.get(0) and this->point.get(0) <= max[0]
+    and min[1] <= this->point.get(1) and this->point.get(1) <= max[1]);
 }
 
 const Point<double, 2> &TravelPoint::getPoint() const {
@@ -51,4 +52,11 @@ TravelPoint::TravelPoint(const TravelPoint &obj) {
     point = obj.point;
     neighborhood = obj.neighborhood;
     startingPoint = obj.startingPoint;
+}
+
+TravelPoint& TravelPoint::operator=(const TravelPoint &obj) {
+    point = obj.point;
+    neighborhood = obj.neighborhood;
+    startingPoint = obj.startingPoint;
+    return *this;
 }

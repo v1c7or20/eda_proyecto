@@ -15,11 +15,13 @@
 
 class TravelParser {
 private:
-    std::string filename;
-    std::vector<Travel *> travels;
+    using point_t = Point<double, 2>;
 public:
     TravelParser(std::string filename);
     std::vector<Travel *> & getTravels();
+private:
+    std::string filename;
+    std::vector<Travel *> travels;
 };
 
 

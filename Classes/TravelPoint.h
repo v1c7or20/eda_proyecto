@@ -12,30 +12,23 @@
 
 class TravelPoint{
 private:
-    Point<double,2> point;
+    using point_t = Point<double, 2>; 
+public:
+    TravelPoint();
+    TravelPoint(point_t coordinate, bool start);
+    TravelPoint(const TravelPoint &obj);
+    bool isInsidePolygon(std::vector<point_t> polygon) const;
+    bool isInsideRectangle(point_t min, point_t max) const;
+    const Point<double, 2> &getPoint() const;
+    Neighborhood *getNeighborhood() const;
+    void setNext(TravelPoint *next);
+    bool isStartingPoint() const;
+    void setNeighborhood(Neighborhood *neighborhood);
+    TravelPoint& operator=(const TravelPoint& travelPoint);
+private:
+    point_t point;
     Neighborhood *neighborhood;
     bool startingPoint;
-public:
-    TravelPoint(coordinate_t coordinate, bool start);
-
-    TravelPoint(const TravelPoint &obj);
-
-    TravelPoint();
-
-    bool isInsidePolygon(std::vector<coordinate_t> polygon) const;
-
-    bool isInsideRectangle(std::pair<float,float>min, std::pair<float,float>max) const;
-
-    const Point<double, 2> &getPoint() const;
-
-    Neighborhood *getNeighborhood() const;
-
-    void setNext(TravelPoint *next);
-
-    bool isStartingPoint() const;
-
-    void setNeighborhood(Neighborhood *neighborhood);
-
 };
 
 #endif //EDA_PROYECTO_TRAVELPOINT_H
