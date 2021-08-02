@@ -210,14 +210,14 @@ std::vector<DataType> RTREE_DEFINITION::search(rectangle_t rectangle){
 }
 
 RTREE_TEMPLATE
-std::vector<DataType> RTREE_DEFINITION::searchPerRangeUtil(std::shared_ptr<node_t> node, Point point, double distance){
+std::vector<DataType> RTREE_DEFINITION::rangeSearchUtil(std::shared_ptr<node_t> node, Point point, double distance){
     if(node->isLeaf()){
         return node->getAllData(point, distance);
     }
     std::vector<DataType> result;
     for(std::size_t i = 0; i < node->size(); ++i){
         if(rectangle_t::minDist(point, node->getEntry(i)->rectangle) <= distance){
-            auto childResults = searchPerRangeUtil(node->getEntry(i)->getChild(), point, distance);
+            auto childResults = rangeSearchUtil(node->getEntry(i)->getChild(), point, distance);
             result.insert(result.end(), childResults.begin(), childResults.end()); 
         }
     }
@@ -225,10 +225,10 @@ std::vector<DataType> RTREE_DEFINITION::searchPerRangeUtil(std::shared_ptr<node_
 }
 
 RTREE_TEMPLATE
-std::vector<DataType> RTREE_DEFINITION::searchPerRange(Point point, double distance){
+std::vector<DataType> RTREE_DEFINITION::rangeSearch(Point point, double distance){
     if(!_root)
         return std::vector<DataType>();
-    return searchPerRangeUtil(_root, point, distance);
+    return rangeSearchUtil(_root, point, distance);
 }
 
 RTREE_TEMPLATE

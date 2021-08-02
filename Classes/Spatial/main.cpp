@@ -17,7 +17,7 @@ int main(){
     point_t P1({1, 1}), P2({2, 11}), P3({6, 10}), P4({1, 9}), P5({1, 13}),
             P6({2, 9}), P7({8, 1}), P8({4, 8}), P9({2, 4}), P10({4, 10}),
             P11({6, 3}), P12({6, 1}), P13({2, 2}), P14({7, 5}), P15({7, 2});
-    // rectangle_t R1(point_t({1, 8}), point_t({4, 9}));
+    rectangle_t R1(point_t({1, 8}), point_t({4, 9}));
     // rectangle_t R2(point_t({1, 10}), point_t({6, 13}));
     // rectangle_t R3(point_t({1, 1}), point_t({2, 4}));
     // rectangle_t R4(point_t({6, 1}), point_t({8, 3}));
@@ -46,5 +46,5 @@ int main(){
     auto result = rtree.search(query);
     cout << result.size() << endl; // expected = 3
     cout << rectangle_t::minDist(point_t({-9, 9}), R1) << endl;
-    cout << "search per range: " << rtree.searchPerRange(point_t({3, 12}), 5).size() << endl;
+    cout << "search per range: " << rtree.rangeSearch(point_t({3, 12}), 5).size() << endl;
 }
