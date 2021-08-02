@@ -43,13 +43,15 @@ enable_testing()
 add_executable(
   EDA_proyecto
   main.cpp
-  Classes/TravelPoint.cpp
-  Classes/Travel.cpp
-  Classes/Neighborhood.cpp
+  Classes/Basic/TravelPoint.cpp
+  Classes/Basic/Travel.cpp
+  Classes/Basic/Neighborhood.cpp
   Classes/Spatial/RNode.cpp
   Classes/Spatial/RTree.cpp
-  Parser/NeighborhoodParser.cpp
-  Parser/TravelParser.cpp
+  Classes/Spatial/Point.h
+  Classes/Spatial/Rectangle.h
+  Classes/Parser/NeighborhoodParser.cpp
+  Classes/Parser/TravelParser.cpp
   )
 
 target_link_libraries(

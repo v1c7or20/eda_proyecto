@@ -27,6 +27,8 @@ public:
     rectangle_t getNodeMBR();
     void setNewEntry(std::size_t index, std::shared_ptr<entry_t> entry);
     std::vector<DataType> getAllData(rectangle_t rectangle);
+    std::vector<DataType> getAllData(Point point, double distance);
+    void killSelf();
 private:
     bool _leaf{};
     std::vector<std::shared_ptr<entry_t>> _entries;

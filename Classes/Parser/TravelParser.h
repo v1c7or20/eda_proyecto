@@ -5,7 +5,7 @@
 #ifndef EDA_PROYECTO_POINT_PARSER_H
 #define EDA_PROYECTO_POINT_PARSER_H
 
-#include "../Classes/Travel.h"
+#include "../Basic/Travel.h"
 
 #include <string>
 #include <vector>
@@ -15,11 +15,13 @@
 
 class TravelParser {
 private:
-    std::string filename;
-    std::vector<Travel *> travels;
+    using point_t = Point<double, 2>;
 public:
     TravelParser(std::string filename);
     std::vector<Travel *> & getTravels();
+private:
+    std::string filename;
+    std::vector<Travel *> travels;
 };
 
 

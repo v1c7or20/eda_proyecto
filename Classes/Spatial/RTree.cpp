@@ -98,7 +98,7 @@ std::vector<std::shared_ptr<RNODE_DEFINITION>> RTREE_DEFINITION::qPickSeeds(std:
             rectangle_t rectA = node->getEntry(i)->rectangle;
             rectangle_t rectB = node->getEntry(j)->rectangle;
             rectangle_t r = rectangle_t::rectangleIncluding(rectA, rectB);
-            double area = r.getArea() - rectA.getArea() - rectB.getArea();
+            double area = r.getRegion(false) - rectA.getRegion(false) - rectB.getRegion(false);
             if(area > maxArea){
                 maxArea = area;
                 entryIndexA = i;
@@ -129,9 +129,9 @@ void RTREE_DEFINITION::qDistribute(std::shared_ptr<node_t> nodeToSplit, std::sha
             nodeA->add(entry);
         }else if(areaB < areaA){
             nodeB->add(entry);
-        }else if(mbrA.getArea() < mbrB.getArea()){
+        }else if(mbrA.getRegion(false) < mbrB.getRegion(false)){
             nodeA->add(entry);
-        }else if(mbrB.getArea() < mbrA.getArea()){
+        }else if(mbrB.getRegion(false) < mbrA.getRegion(false)){
             nodeB->add(entry);
         }else if(nodeA->size() < nodeB->size()){
             nodeA->add(entry);
@@ -207,4 +207,34 @@ std::vector<DataType> RTREE_DEFINITION::search(Point min, Point max){
 RTREE_TEMPLATE
 std::vector<DataType> RTREE_DEFINITION::search(rectangle_t rectangle){
     return searchRectangle(rectangle);
+}
+
+RTREE_TEMPLATE
+std::vector<DataType> RTREE_DEFINITION::rangeSearchUtil(std::shared_ptr<node_t> node, Point point, double distance){
+    if(node->isLeaf()){
+        return node->getAllData(point, distance);
+    }
+    std::vector<DataType> result;
+    for(std::size_t i = 0; i < node->size(); ++i){
+        if(rectangle_t::minDist(point, node->getEntry(i)->rectangle) <= distance){
+            auto childResults = rangeSearchUtil(node->getEntry(i)->getChild(), point, distance);
+            result.insert(result.end(), childResults.begin(), childResults.end()); 
+        }
+    }
+    return result;
+}
+
+RTREE_TEMPLATE
+std::vector<DataType> RTREE_DEFINITION::rangeSearch(Point point, double distance){
+    if(!_root)
+        return std::vector<DataType>();
+    return rangeSearchUtil(_root, point, distance);
+}
+
+RTREE_TEMPLATE
+RTREE_DEFINITION::~RTree(){
+    if(_root){
+        _root->killSelf();
+        _root.reset();
+    }
 }

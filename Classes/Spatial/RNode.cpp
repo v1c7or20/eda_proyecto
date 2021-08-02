@@ -19,8 +19,8 @@ std::size_t RNODE_DEFINITION::pickChild(rectangle_t rectangle){
     for(std::size_t i = 0; i < this->_entries.size(); i++){
         rectangle_t currentRect = this->_entries[i]->rectangle;
         rectangle_t tempRect = rectangle_t::rectangleIncluding(currentRect, rectangle);
-        double areaCurrentRect = currentRect.getArea();
-        double increase = tempRect.getArea() - areaCurrentRect;
+        double areaCurrentRect = currentRect.getRegion(false);
+        double increase = tempRect.getRegion(false) - areaCurrentRect;
         if((increase < bestIncrease) || firstTime ||
             (increase == bestIncrease && areaCurrentRect < bestArea)){
             indexChild = i;
@@ -84,4 +84,30 @@ std::vector<DataType> RNODE_DEFINITION::getAllData(rectangle_t rectangle){
             result.push_back(_entries[i]->getData());
     }
     return result;
+}
+
+RNODE_TEMPLATE
+std::vector<DataType> RNODE_DEFINITION::getAllData(Point point, double distance){
+    std::vector<DataType> result;
+    for(std::size_t i = 0; i < _entries.size(); ++i){
+        if(rectangle_t::minDist(point, _entries[i]->rectangle) <= distance){
+            result.push_back(_entries[i]->getData());
+        }
+    }
+    return result;
+}
+
+RNODE_TEMPLATE
+void RNODE_DEFINITION::killSelf(){
+    if(isLeaf()){
+        for(std::size_t i = 0; i < _entries.size(); ++i){
+            _entries[i].reset();
+        }
+    }else{
+        for(std::size_t i = 0; i < _entries.size(); ++i){
+            _entries[i]->getChild()->killSelf();
+            _entries[i].reset();
+        }
+    }
+    _entries.clear();
 }

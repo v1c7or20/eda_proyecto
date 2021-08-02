@@ -2,7 +2,7 @@
 #define EDA_PROYECTO_RECTANGLE_H
 
 #include <cassert>
-
+#include <cmath>
 template<typename Point>
 struct Rectangle{
     Point _min{};
@@ -14,12 +14,16 @@ struct Rectangle{
         assert(_min.size() == _max.size());
         return this->_min.size();
     }
-    double getArea(){
-        assert(getDimension() == 2);
-        const int x = 0, y = 1;
-        double width = abs(_max.get(x) - _min.get(x));
-        double height = abs(_max.get(y) - _min.get(y));
-        return width * height;
+    double getRegion(bool nullRegion = true){
+        if(_min == _max) return 0;
+        double region = 1;
+        for(std::size_t i = 0; i < getDimension(); ++i){
+            double side = abs(_max.get(i) - _min.get(i));
+            if(side == 0 && !nullRegion)
+                side = 0.0000001;
+            region *= side;
+        }
+        return region;
     }
     Rectangle& operator=(const Rectangle& rect){
         this->_min = rect._min;
@@ -36,7 +40,7 @@ struct Rectangle{
     }
     static double areaIncrease(Rectangle rectA, Rectangle rectB) {
         Rectangle rect = rectangleIncluding(rectA, rectB);
-        return rect.getArea() - rectA.getArea();
+        return rect.getRegion(false) - rectA.getRegion(false);
     }
     static bool overlap(Rectangle rectA, Rectangle rectB){
         std::size_t dimension = rectA.getDimension();
@@ -46,6 +50,18 @@ struct Rectangle{
             return false;
         }
         return true;
+    }
+    static double minDist(Point point, Rectangle rectangle){
+        assert(point.size() == rectangle.getDimension());
+        double result = 0.0;
+        for(std::size_t i = 0; i < point.size(); ++i){
+            if(point.get(i) < rectangle._min.get(i)){
+                result += std::pow(point.get(i) - rectangle._min.get(i), 2);
+            }else if(point.get(i) > rectangle._max.get(i)){
+                result += std::pow(point.get(i) - rectangle._max.get(i), 2);
+            }
+        }
+        return std::sqrt(result);
     }
 };
 
