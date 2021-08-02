@@ -1,5 +1,5 @@
-#ifndef EDA_PROYECTO_BRANCH_H
-#define EDA_PROYECTO_BRANCH_H
+#ifndef EDA_PROYECTO_ENTRY_H
+#define EDA_PROYECTO_ENTRY_H
 
 #include "Rectangle.h"
 
@@ -34,4 +34,4 @@ public:
     }
 };
 
-#endif // EDA_PROYECTO_BRANCH_H
+#endif // EDA_PROYECTO_ENTRY_H

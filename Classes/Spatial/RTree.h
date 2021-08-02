@@ -21,6 +21,7 @@ private:
     std::vector<std::shared_ptr<node_t>> qPickSeeds(std::shared_ptr<node_t> node);
     void qDistribute(std::shared_ptr<node_t> nodeToSplit, std::shared_ptr<node_t> nodeA, std::shared_ptr<node_t> nodeB);
     std::shared_ptr<entry_t> pickNext(std::shared_ptr<node_t> nodeToSplit, std::shared_ptr<node_t> nodeA, std::shared_ptr<node_t> nodeB);
+    std::vector<DataType> searchPerRangeUtil(std::shared_ptr<node_t> node, Point point, double distance);
 public:
     RTree(){ assert(MAXNODES >= 2 && MAXNODES > MINNODES); } 
     void insert(Point point, DataType data);
@@ -29,6 +30,7 @@ public:
     std::vector<DataType> search(Point point);
     std::vector<DataType> search(Point min, Point max);
     std::vector<DataType> search(rectangle_t rectangle);
+    std::vector<DataType> searchPerRange(Point point, double distance);
     std::shared_ptr<node_t> getRoot();
     ~RTree();
 private:

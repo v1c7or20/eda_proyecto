@@ -42,8 +42,9 @@ int main(){
     rtree.insert(P13, 13);
     rtree.insert(P14, 14);
     rtree.insert(P15, 15);
-
     rectangle_t query(point_t({0, 8}), point_t({3, 12}));
     auto result = rtree.search(query);
     cout << result.size() << endl; // expected = 3
+    cout << rectangle_t::minDist(point_t({-9, 9}), R1) << endl;
+    cout << "search per range: " << rtree.searchPerRange(point_t({3, 12}), 5).size() << endl;
 }

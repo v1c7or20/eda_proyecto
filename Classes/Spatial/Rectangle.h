@@ -2,7 +2,7 @@
 #define EDA_PROYECTO_RECTANGLE_H
 
 #include <cassert>
-
+#include <cmath>
 template<typename Point>
 struct Rectangle{
     Point _min{};
@@ -50,6 +50,18 @@ struct Rectangle{
             return false;
         }
         return true;
+    }
+    static double minDist(Point point, Rectangle rectangle){
+        assert(point.size() == rectangle.getDimension());
+        double result = 0.0;
+        for(std::size_t i = 0; i < point.size(); ++i){
+            if(point.get(i) < rectangle._min.get(i)){
+                result += std::pow(point.get(i) - rectangle._min.get(i), 2);
+            }else if(point.get(i) > rectangle._max.get(i)){
+                result += std::pow(point.get(i) - rectangle._max.get(i), 2);
+            }
+        }
+        return std::sqrt(result);
     }
 };
 

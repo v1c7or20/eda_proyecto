@@ -87,6 +87,17 @@ std::vector<DataType> RNODE_DEFINITION::getAllData(rectangle_t rectangle){
 }
 
 RNODE_TEMPLATE
+std::vector<DataType> RNODE_DEFINITION::getAllData(Point point, double distance){
+    std::vector<DataType> result;
+    for(std::size_t i = 0; i < _entries.size(); ++i){
+        if(rectangle_t::minDist(point, _entries[i]->rectangle) <= distance){
+            result.push_back(_entries[i]->getData());
+        }
+    }
+    return result;
+}
+
+RNODE_TEMPLATE
 void RNODE_DEFINITION::killSelf(){
     if(isLeaf()){
         for(std::size_t i = 0; i < _entries.size(); ++i){
