@@ -4,7 +4,9 @@
 
 #include "TravelPoint.h"
 
-TravelPoint::TravelPoint() = default;
+TravelPoint::TravelPoint(){
+    this->neighborhood = nullptr;
+}
 
 TravelPoint::TravelPoint(point_t coordinate, bool start){
     this->point = coordinate;
