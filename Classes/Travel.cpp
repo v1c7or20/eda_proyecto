@@ -71,3 +71,11 @@ Travel::Travel(const Travel &obj) {
 }
 
 Travel::Travel() = default;
+
+Travel::Travel(const std::string& pickupDate, const std::string& dropoffDate, int passengerCount,
+            double tripDistance, double fareAmount, 
+            const TravelPoint& startingPoint, const TravelPoint& ArrivalPoint) : pickupDate(pickupDate), dropoffDate(dropoffDate), 
+                                            passengerCount(passengerCount), tripDistance(tripDistance), fareAmount(fareAmount),
+                                            StartingPoint(startingPoint), ArrivalPoint(ArrivalPoint){
+
+}

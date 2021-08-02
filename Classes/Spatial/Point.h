@@ -26,6 +26,10 @@ public:
         return _values.at(pos);
     }
 
+    void set(std::size_t pos, DataType value) {
+        _values[pos] = value;
+    }
+
     std::size_t size(){
         return DIM;
     }
