@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <iostream>
+#include <string.h>
 
 // spatial
 #include "../Classes/Spatial/Point.h"
@@ -17,7 +18,7 @@
 
 #include "../Classes/Solver/Solver.cpp"
 
-
+/*
 class ParserTests : public ::testing::Test {
   protected:
     using data_t = int;
@@ -63,7 +64,7 @@ TEST_F(ParserTests, nonExistantOrEmptyNeighborhoodFile) {
       NP np = NP("./../badfile.jsonn");
   }, std::invalid_argument);
 }
-
+*/
 class RTreeTests : public ::testing::Test {
   protected:
     using data_t = int;
@@ -261,7 +262,7 @@ class RTreeProject : public::testing::Test {
     NP np = NP("./../neighboord.json");
     std::vector<Travel *> travels = tp.getTravels();
     std::vector<Neighborhood *> neighborhoods = np.getNeighborhoods();
-    //Solver solver();
+    //Solver solver(travels, neighborhoods);
     Solver* solver = new Solver(travels, neighborhoods);
 };
 
@@ -276,14 +277,30 @@ TEST_F(RTreeProject, NeighborhoodScan) {
 }
 
 TEST_F(RTreeProject, query1) {
-  auto query1Result = solver.query1();
-  for(auto& result: queryResult){
-    auto start = result.getStartingPoint().getNeighborhood().getName();
-    auto end = result.getArrivalPoint().getNeighborhood().getName();
-    EXPECT_STREQ(start,end)
+  auto query1Result = solver->query1();
+  for(auto& result: query1Result){
+    auto start = result->getStartingPoint().getNeighborhood()->getName();
+    auto end = result->getArrivalPoint().getNeighborhood()->getName();
+    EXPECT_EQ(start,end);
   }
 }
 
+TEST_F(RTreeProject, query3) {
+	point_t P1({0, 8}), P2({3, 12});
+  auto query3Result = solver->query3(P1, P2);
+  for(auto& result: query3Result){
+    EXPECT_TRUE(result->getStartingPoint().isInsideRectangle(P1, P2));
+  }
+}
+/*
+TEST_F(RTreeProject, query1) {
+  auto query1Result = solver->query1();
+  for(auto& result: query1Result){
+    auto start = result->getStartingPoint().getNeighborhood()->getName();
+    auto end = result->getArrivalPoint().getNeighborhood()->getName();
+    EXPECT_EQ(start,end);
+  }
+}*/
 
 // class QuadTreeParamTest : public ::testing::TestWithParam<std::size_t> {
 //   protected:

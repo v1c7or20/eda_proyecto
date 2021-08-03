@@ -2,6 +2,7 @@
 #include <queue>
 
 Solver::Solver(std::vector<Travel*> &travels, std::vector<Neighborhood*> &neighborhoods){
+    std::cout << "in constructor" << std::endl;
     for(auto& neighborhood : neighborhoods){
         neighborhoodsRTree.insert(neighborhood->getMBR(), neighborhood);
         mapping[neighborhood] = 0;
@@ -9,6 +10,7 @@ Solver::Solver(std::vector<Travel*> &travels, std::vector<Neighborhood*> &neighb
     for(auto& travel : travels){
         addTravel(travel);
     }
+    std::cout << "out constructor" << std::endl;
 }
 
 std::vector<Travel*> Solver::query1(){
