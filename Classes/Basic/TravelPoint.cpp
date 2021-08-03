@@ -11,6 +11,7 @@ TravelPoint::TravelPoint(){
 TravelPoint::TravelPoint(point_t coordinate, bool start){
     this->point = coordinate;
     this->startingPoint = start;
+    this->neighborhood = nullptr;
 }
 
 bool TravelPoint::isInsidePolygon(std::vector<point_t> polygon) const {

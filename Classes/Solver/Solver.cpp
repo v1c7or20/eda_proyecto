@@ -3,6 +3,7 @@
 
 Solver::Solver(std::vector<Travel*> &travels, std::vector<Neighborhood*> &neighborhoods){
     std::cout << "in constructor" << std::endl;
+    this->count = 0;
     for(auto& neighborhood : neighborhoods){
         neighborhoodsRTree.insert(neighborhood->getMBR(), neighborhood);
         mapping[neighborhood] = 0;
@@ -70,10 +71,16 @@ void Solver::addTravel(Travel* travel){
             break;
         }
     }
-    
-    if(startingPoint.getNeighborhood()->getName() == 
-        arrivalPoint.getNeighborhood()->getName()){
-        queryResult1.push_back(travel);
+
+    travel->setStartingPint(startingPoint);
+    travel->setArrivalPoint(arrivalPoint);
+
+    if(startingPoint.getNeighborhood() != nullptr &&
+        arrivalPoint.getNeighborhood() != nullptr){
+        if(startingPoint.getNeighborhood()->getName() ==
+            arrivalPoint.getNeighborhood()->getName()){
+            queryResult1.push_back(travel);
+        }
     }
 
     travelsRTreeBySP.insert(startingPoint.getPoint(), travel);

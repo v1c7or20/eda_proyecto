@@ -254,7 +254,7 @@ TEST_F(RTreeQueriesTests, RangeSearch) {
 
 class RTreeProject : public::testing::Test {
   protected:
-    using data_t = int;
+    using data_t = double;
     using point_t = Point<data_t, 2>;
     using TP = TravelParser;
     using NP = NeighborhoodParser;
