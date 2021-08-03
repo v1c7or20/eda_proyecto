@@ -3,7 +3,6 @@
 
 Solver::Solver(std::vector<Travel*> &travels, std::vector<Neighborhood*> &neighborhoods){
     std::cout << "in constructor" << std::endl;
-    this->count = 0;
     for(auto& neighborhood : neighborhoods){
         neighborhoodsRTree.insert(neighborhood->getMBR(), neighborhood);
         mapping[neighborhood] = 0;
