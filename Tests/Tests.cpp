@@ -281,17 +281,13 @@
 
     // Query 2
     auto mapping = solver->getMapping();
-    std::vector<std::pair<long unsigned int, Neighborhood*>> pairs;
+    std::vector<std::pair<int, Neighborhood*>> pairs;
     for (auto& it: mapping)
       pairs.push_back(std::make_pair((-1) * it.second, it.first));
     sort(pairs.begin(), pairs.end());
     auto neighbs = solver->query2(5);
-    std::string xd1 = "xd";
-    std::string xd2 = "xd";
     for(int i = 0; i < 5; ++i)
-      //EXPECT_TRUE(neighbs[i]->getName() == pairs[i].second->getName());
-      ASSERT_STREQ((neighbs[i]->getName()).c_str(), (pairs[i].second->getName()).c_str());
-      //ASSERT_STREQ(xd1, xd2);
+      EXPECT_TRUE(neighbs[i]->getName() == pairs[i].second->getName());
 
     // Query 3
     point_t P1({-80, 30}), P2({-50, 50});
