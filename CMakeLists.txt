@@ -14,6 +14,8 @@ function(download_file url filename hash_type hash)
 
 endfunction(download_file)
 
+execute_process(COMMAND python script.py
+    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
 
 # === example
 download_file(
