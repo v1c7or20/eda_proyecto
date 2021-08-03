@@ -18,6 +18,7 @@ public:
     std::vector<Travel*> query3(point_t p1, point_t p2);
     std::vector<Travel*> query4(point_t point, double distance);
     void addTravel(Travel* travel);
+    std::unordered_map<Neighborhood*, std::size_t> getMapping();
 private:
     RTree<point_t, Neighborhood*, 4, 2> neighborhoodsRTree;
     RTree<point_t, Travel*, 4, 2> travelsRTreeBySP;

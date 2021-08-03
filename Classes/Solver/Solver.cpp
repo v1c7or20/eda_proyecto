@@ -18,6 +18,7 @@ std::vector<Travel*> Solver::query1(){
 }
 
 std::vector<Neighborhood*> Solver::query2(std::size_t k){
+  std::cout << "in query 2\n";
     std::priority_queue<std::pair<int, Neighborhood*>> pq;
     for(auto& item : mapping){
         int value = (-1) * item.second;
@@ -36,6 +37,7 @@ std::vector<Neighborhood*> Solver::query2(std::size_t k){
         result[i] = pq.top().second;
         pq.pop();
     }
+  std::cout << "in query 2/2\n";
     return result;
     
 }
@@ -84,4 +86,9 @@ void Solver::addTravel(Travel* travel){
 
     travelsRTreeBySP.insert(startingPoint.getPoint(), travel);
     travelsRTreeByAP.insert(arrivalPoint.getPoint(), travel);
+}
+
+std::unordered_map<Neighborhood*, std::size_t> Solver::getMapping(){
+    std::cout << "get mapping\n" << std::endl;
+    return mapping;
 }
