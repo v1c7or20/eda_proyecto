@@ -268,7 +268,7 @@ class RTreeProject : public::testing::Test {
 
 TEST_F(RTreeProject, TravelScan) {
   data_t travelNumber = travels.size();
-  EXPECT_EQ(travelNumber, 1508501);
+  EXPECT_EQ(travelNumber, 1504083);
 }
 
 TEST_F(RTreeProject, NeighborhoodScan) {
