@@ -43,13 +43,13 @@ enable_testing()
 add_executable(
   EDA_proyecto
   main.cpp
+  Classes/Spatial/Point.h
+  Classes/Spatial/Rectangle.h
+  Classes/Spatial/RNode.cpp
+  Classes/Spatial/RTree.cpp
   Classes/Basic/TravelPoint.cpp
   Classes/Basic/Travel.cpp
   Classes/Basic/Neighborhood.cpp
-  Classes/Spatial/RNode.cpp
-  Classes/Spatial/RTree.cpp
-  Classes/Spatial/Point.h
-  Classes/Spatial/Rectangle.h
   Classes/Parser/NeighborhoodParser.cpp
   Classes/Parser/TravelParser.cpp
   )

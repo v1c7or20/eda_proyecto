@@ -15,7 +15,7 @@
 #include "../Classes/Parser/TravelParser.h"
 #include "../Classes/Parser/NeighborhoodParser.h"
 
-//#include "../Classes/Solver/Solver.h"
+#include "../Classes/Solver/Solver.cpp"
 
 
 class ParserTests : public ::testing::Test {
@@ -262,6 +262,7 @@ class RTreeProject : public::testing::Test {
     std::vector<Travel *> travels = tp.getTravels();
     std::vector<Neighborhood *> neighborhoods = np.getNeighborhoods();
     //Solver solver();
+    Solver* solver = new Solver(travels, neighborhoods);
 };
 
 TEST_F(RTreeProject, TravelScan) {
