@@ -8,7 +8,7 @@ function(download_file url filename hash_type hash)
 
     if(NOT EXISTS ${filename})
         file(DOWNLOAD ${url} ${filename}
-                TIMEOUT 60  # seconds
+                TIMEOUT 120 # seconds
                 EXPECTED_HASH ${hash_type}=${hash})
     endif()
 
