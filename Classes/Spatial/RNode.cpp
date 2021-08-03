@@ -33,8 +33,24 @@ std::size_t RNODE_DEFINITION::pickChild(rectangle_t rectangle){
 }
 
 RNODE_TEMPLATE
+void RNODE_DEFINITION::add(rectangle_t rectangle, DataType& data){
+    for(std::size_t i = 0; i < _entries.size(); ++i){
+        if(_entries[i]->getRectangle() == rectangle){
+            _entries[i]->add(data);
+            return;
+        }
+    }
+    _entries.push_back(std::make_shared<entry_t>(rectangle, data));
+}
+
+RNODE_TEMPLATE
+void RNODE_DEFINITION::add(rectangle_t rectangle, std::shared_ptr<RNode> node){
+    _entries.push_back(std::make_shared<entry_t>(rectangle, node));
+}
+
+RNODE_TEMPLATE
 void RNODE_DEFINITION::add(std::shared_ptr<entry_t> entry){
-    this->_entries.push_back(entry);
+    _entries.push_back(entry);
 }
 
 RNODE_TEMPLATE
@@ -80,8 +96,10 @@ RNODE_TEMPLATE
 std::vector<DataType> RNODE_DEFINITION::getAllData(rectangle_t rectangle){
     std::vector<DataType> result;
     for(std::size_t i = 0; i < _entries.size(); ++i){
-        if(rectangle_t::overlap(_entries[i]->rectangle, rectangle))
-            result.push_back(_entries[i]->getData());
+        if(rectangle_t::overlap(_entries[i]->rectangle, rectangle)){
+            auto v = _entries[i]->getDataVector();
+            result.insert(result.end(), v.begin(), v.end());
+        }
     }
     return result;
 }
@@ -91,7 +109,8 @@ std::vector<DataType> RNODE_DEFINITION::getAllData(Point point, double distance)
     std::vector<DataType> result;
     for(std::size_t i = 0; i < _entries.size(); ++i){
         if(rectangle_t::minDist(point, _entries[i]->rectangle) <= distance){
-            result.push_back(_entries[i]->getData());
+            auto v = _entries[i]->getDataVector();
+            result.insert(result.end(), v.begin(), v.end());
         }
     }
     return result;
