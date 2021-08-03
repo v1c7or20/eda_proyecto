@@ -278,20 +278,23 @@
       auto end = result->getArrivalPoint().getNeighborhood()->getName();
       EXPECT_EQ(start,end);
     }
+
     // Query 2
     auto mapping = solver->getMapping();
     std::vector<std::pair<long unsigned int, Neighborhood*>> pairs;
     for (auto& it: mapping)
-      pairs.push_back(std::make_pair(it.second, it.first));
+      pairs.push_back(std::make_pair((-1) * it.second, it.first));
     sort(pairs.begin(), pairs.end());
     auto neighbs = solver->query2(5);
     for(int i = 0; i < 5; ++i)
       ASSERT_EQ(neighbs[i], pairs[i].second);
+
     // Query 3
     point_t P1({-80, 30}), P2({-50, 50});
     queryResult = solver->query3(P1, P2);
     for(auto& result: queryResult)
       EXPECT_TRUE(result->getStartingPoint().isInsideRectangle(P1, P2));
+
     // Query 4
     point_t P3({-173, 40});
     double distance = 30.5;

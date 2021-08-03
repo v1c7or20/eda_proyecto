@@ -2,7 +2,6 @@
 #include <queue>
 
 Solver::Solver(std::vector<Travel*> &travels, std::vector<Neighborhood*> &neighborhoods){
-    std::cout << "in constructor" << std::endl;
     for(auto& neighborhood : neighborhoods){
         neighborhoodsRTree.insert(neighborhood->getMBR(), neighborhood);
         mapping[neighborhood] = 0;
@@ -10,7 +9,6 @@ Solver::Solver(std::vector<Travel*> &travels, std::vector<Neighborhood*> &neighb
     for(auto& travel : travels){
         addTravel(travel);
     }
-    std::cout << "out constructor" << std::endl;
 }
 
 std::vector<Travel*> Solver::query1(){
@@ -18,7 +16,6 @@ std::vector<Travel*> Solver::query1(){
 }
 
 std::vector<Neighborhood*> Solver::query2(std::size_t k){
-  std::cout << "in query 2\n";
     std::priority_queue<std::pair<int, Neighborhood*>> pq;
     for(auto& item : mapping){
         int value = (-1) * item.second;
@@ -33,13 +30,11 @@ std::vector<Neighborhood*> Solver::query2(std::size_t k){
         }
     }
     std::vector<Neighborhood*> result(k);
-    for(std::size_t i = k - 1; i >= 0; --i){
+    for(int i = k - 1; i >= 0; --i){
         result[i] = pq.top().second;
         pq.pop();
     }
-  std::cout << "in query 2/2\n";
     return result;
-    
 }
 
 std::vector<Travel*> Solver::query3(point_t p1, point_t p2){
