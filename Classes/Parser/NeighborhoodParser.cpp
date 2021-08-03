@@ -6,7 +6,6 @@
 
 #define DEBUG_BASIC false
 
-
 using json = nlohmann::json;
 
 NeighborhoodParser::NeighborhoodParser(std::string filename) : filename(filename) {

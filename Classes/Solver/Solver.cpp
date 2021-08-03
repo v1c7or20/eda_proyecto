@@ -1,7 +1,7 @@
 #include "Solver.h"
 #include <queue>
 
-Solver::Solver(std::vector<Travel*>& travels, std::vector<Neighborhood*>& neighborhoods){
+Solver::Solver(std::vector<Travel*> &travels, std::vector<Neighborhood*> &neighborhoods){
     for(auto& neighborhood : neighborhoods){
         neighborhoodsRTree.insert(neighborhood->getMBR(), neighborhood);
         mapping[neighborhood] = 0;
