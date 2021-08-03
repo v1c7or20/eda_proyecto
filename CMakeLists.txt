@@ -14,15 +14,15 @@ function(download_file url filename hash_type hash)
 
 endfunction(download_file)
 
-execute_process(COMMAND python script.py
-    WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
-
 # === example
 download_file(
         https://s3.amazonaws.com/nyc-tlc/trip+data/green_tripdata_2015-01.csv
         ./../green_tripdata_2015-01.csv
         SHA256 70F272893AFDAC822853AAE07FFCBF8C0EA5364E0988BB4E50506C2244C1B988)
 
+
+execute_process(COMMAND python3 parsing.py
+        WORKING_DIRECTORY ${CMAKE_CURRENT_LIST_DIR})
 
 FetchContent_Declare(json
         GIT_REPOSITORY https://github.com/ArthurSonzogni/nlohmann_json_cmake_fetchcontent
