@@ -12,7 +12,7 @@ class Solver{
 private:
     using point_t = Point<double, 2>;
 public:
-    Solver(std::vector<Travel*>& travels, std::vector<Neighborhood*>& neighborhoods);
+    Solver(std::vector<Travel*> &travels, std::vector<Neighborhood*> &neighborhoods);
     std::vector<Travel*> query1();
     std::vector<Neighborhood*> query2(std::size_t k);
     std::vector<Travel*> query3(point_t p1, point_t p2);

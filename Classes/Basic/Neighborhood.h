@@ -3,6 +3,7 @@
 
 #include "../Spatial/Point.h"
 #include "../Spatial/Rectangle.h"
+#include <string>
 #include <vector>
 
 class Neighborhood{
