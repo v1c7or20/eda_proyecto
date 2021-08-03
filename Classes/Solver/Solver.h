@@ -11,6 +11,7 @@
 class Solver{
 private:
     using point_t = Point<double, 2>;
+    void addTravelVector(std::vector<Travel*>::iterator start, std::vector<Travel*>::iterator finish);
 public:
     Solver(std::vector<Travel*> &travels, std::vector<Neighborhood*> &neighborhoods);
     std::vector<Travel*> query1();
