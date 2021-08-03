@@ -52,7 +52,6 @@ add_executable(
   Classes/Spatial/Rectangle.h
   Classes/Parser/NeighborhoodParser.cpp
   Classes/Parser/TravelParser.cpp
-  Classes/Solver/Solver.cpp
   )
 
 target_link_libraries(

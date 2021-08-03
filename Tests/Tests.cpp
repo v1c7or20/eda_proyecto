@@ -15,7 +15,7 @@
 #include "../Classes/Parser/TravelParser.h"
 #include "../Classes/Parser/NeighborhoodParser.h"
 
-#include "../Classes/Solver/Solver.h"
+//#include "../Classes/Solver/Solver.h"
 
 
 class ParserTests : public ::testing::Test {
@@ -261,12 +261,12 @@ class RTreeProject : public::testing::Test {
     NP np = NP("./../neighboord.json");
     std::vector<Travel *> travels = tp.getTravels();
     std::vector<Neighborhood *> neighborhoods = np.getNeighborhoods();
-    Solver solver();
+    //Solver solver();
 };
 
 TEST_F(RTreeProject, TravelScan) {
   data_t travelNumber = travels.size();
-  EXPECT_EQ(travelNumber, 381307);
+  EXPECT_EQ(travelNumber, 1508501);
 }
 
 TEST_F(RTreeProject, NeighborhoodScan) {
@@ -275,8 +275,12 @@ TEST_F(RTreeProject, NeighborhoodScan) {
 }
 
 TEST_F(RTreeProject, query1) {
-
-  EXPECT_EQ(1, 1);
+  auto query1Result = solver.query1();
+  for(auto& result: queryResult){
+    auto start = result.getStartingPoint().getNeighborhood().getName();
+    auto end = result.getArrivalPoint().getNeighborhood().getName();
+    EXPECT_STREQ(start,end)
+  }
 }
 
 
