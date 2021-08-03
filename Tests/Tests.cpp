@@ -268,7 +268,7 @@
   TEST_F(RTreeProject, mainQueryTest) {
     // Data Read
     data_t travelNumber = travels.size();
-    EXPECT_EQ(travelNumber, 318987);
+    EXPECT_EQ(travelNumber, 1504083);
     data_t neighborhoodNumber = neighborhoods.size();
     EXPECT_EQ(neighborhoodNumber, 310);
     // Query 1
@@ -286,8 +286,12 @@
       pairs.push_back(std::make_pair((-1) * it.second, it.first));
     sort(pairs.begin(), pairs.end());
     auto neighbs = solver->query2(5);
+    std::string xd1 = "xd";
+    std::string xd2 = "xd";
     for(int i = 0; i < 5; ++i)
-      ASSERT_EQ(neighbs[i], pairs[i].second);
+      //EXPECT_TRUE(neighbs[i]->getName() == pairs[i].second->getName());
+      ASSERT_STREQ((neighbs[i]->getName()).c_str(), (pairs[i].second->getName()).c_str());
+      //ASSERT_STREQ(xd1, xd2);
 
     // Query 3
     point_t P1({-80, 30}), P2({-50, 50});

@@ -1,13 +1,37 @@
 #include "Solver.h"
+#include <algorithm>
+#include <thread>
+#include <cmath>
 #include <queue>
+#include <mutex>
+
+std::mutex mylockRTreeBySP;
+std::mutex mylockRTreeByAP;
+std::mutex mylockQueryResult1;
 
 Solver::Solver(std::vector<Travel*> &travels, std::vector<Neighborhood*> &neighborhoods){
     for(auto& neighborhood : neighborhoods){
         neighborhoodsRTree.insert(neighborhood->getMBR(), neighborhood);
         mapping[neighborhood] = 0;
     }
-    for(auto& travel : travels){
-        addTravel(travel);
+    const std::size_t NTHREADS = 6;
+    std::size_t size = travels.size();
+    std::size_t step = std::ceil(double(size) / NTHREADS);
+    std::vector<std::thread> threads(NTHREADS);
+    for(std::size_t i = 0; i < NTHREADS; ++i){
+        std::size_t start = i * step;
+        std::size_t end = std::min((i+1)*step, size);
+        threads[i] = std::thread(&Solver::addTravelVector, this, travels.begin() + start, travels.begin() + end);
+    }
+
+    for(std::size_t i = 0; i < NTHREADS; ++i){
+        threads[i].join();
+    }
+}
+
+void Solver::addTravelVector(std::vector<Travel*>::iterator start, std::vector<Travel*>::iterator finish){
+    for(auto it = start; it != finish; ++it){
+        addTravel(*it);
     }
 }
 
@@ -75,15 +99,20 @@ void Solver::addTravel(Travel* travel){
         arrivalPoint.getNeighborhood() != nullptr){
         if(startingPoint.getNeighborhood()->getName() ==
             arrivalPoint.getNeighborhood()->getName()){
+            mylockQueryResult1.lock();
             queryResult1.push_back(travel);
+            mylockQueryResult1.unlock();
         }
     }
-
+    mylockRTreeBySP.lock();
     travelsRTreeBySP.insert(startingPoint.getPoint(), travel);
+    mylockRTreeBySP.unlock();
+
+    mylockRTreeByAP.lock();
     travelsRTreeByAP.insert(arrivalPoint.getPoint(), travel);
+    mylockRTreeByAP.unlock();
 }
 
 std::unordered_map<Neighborhood*, std::size_t> Solver::getMapping(){
-    std::cout << "get mapping\n" << std::endl;
     return mapping;
 }
