@@ -19,6 +19,8 @@ public:
     explicit RNode(bool leaf);
     bool isLeaf();
     std::size_t pickChild(rectangle_t rectangle);
+    void add(rectangle_t, DataType& data);
+    void add(rectangle_t, std::shared_ptr<RNode> node);
     void add(std::shared_ptr<entry_t> entry);
     std::size_t size();
     std::shared_ptr<entry_t> getEntry(std::size_t index);

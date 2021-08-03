@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <cmath>
+
 template<typename Point>
 struct Rectangle{
     Point _min{};
@@ -30,12 +31,16 @@ struct Rectangle{
         this->_max = rect._max;
         return *this;
     }
+    bool operator==(const Rectangle& rect){
+        return _min == rect._min && _max == rect._max;
+    }
     static Rectangle rectangleIncluding(Rectangle rectA, Rectangle rectB){
-        const int x = 0, y = 1;
-        Point min({std::min(rectA._min.get(x), rectB._min.get(x)),
-                    std::min(rectA._min.get(y), rectB._min.get(y))});
-        Point max({std::max(rectA._max.get(x), rectB._max.get(x)),
-                    std::max(rectA._max.get(y), rectB._max.get(y))});
+        assert(rectA.getDimension() == rectB.getDimension());
+        Point min, max;
+        for(std::size_t i = 0; i < rectA.getDimension(); ++i){
+            min.set(i, std::min(rectA._min.get(i), rectB._min.get(i)));
+            max.set(i, std::max(rectA._max.get(i), rectB._max.get(i)));
+        }
         return Rectangle(min, max);
     }
     static double areaIncrease(Rectangle rectA, Rectangle rectB) {

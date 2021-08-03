@@ -25,15 +25,15 @@ void RTREE_DEFINITION::insertRectangle(rectangle_t& rectangle, DataType& data){
         auto nodeB = result.second;
         _root.reset();
         _root = std::make_shared<node_t>(false);
-        _root->add(std::make_shared<entry_t>(nodeA->getNodeMBR(), nodeA));
-        _root->add(std::make_shared<entry_t>(nodeB->getNodeMBR(), nodeB));
+        _root->add(nodeA->getNodeMBR(), nodeA);
+        _root->add(nodeB->getNodeMBR(), nodeB);
     }
 }
 
 RTREE_TEMPLATE
 void RTREE_DEFINITION::insertUtil(std::shared_ptr<node_t> node, rectangle_t& rectangle, DataType& data){
     if(node->isLeaf()){
-        node->add(std::make_shared<entry_t>(rectangle, data));
+        node->add(rectangle, data);
         return;
     }
 
@@ -47,7 +47,7 @@ void RTREE_DEFINITION::insertUtil(std::shared_ptr<node_t> node, rectangle_t& rec
         auto nodeA = result.first;
         auto nodeB = result.second;
         node->setNewEntry(indexNextChild, std::make_shared<entry_t>(nodeA->getNodeMBR(), nodeA));
-        node->add(std::make_shared<entry_t>(nodeB->getNodeMBR(), nodeB));
+        node->add(nodeB->getNodeMBR(), nodeB);
     }else if(nextChild->isLeaf()){
         nextEntry->rectangle = rectangle_t::rectangleIncluding(nextEntry->rectangle, rectangle);
     }else if(prevSize != nextChild->size()){
