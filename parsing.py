@@ -1,6 +1,6 @@
 import pandas as pd
 
-print("Limpiando la data")
+print("/********** Cleaning the data **********/")
 df = pd.read_csv("green_tripdata_2015-01.csv", sep=',', index_col=False)
 
 start_x = "Pickup_longitude"
@@ -14,4 +14,4 @@ if(len(indexes_to_delete) != 0):
     final_df.index = pd.RangeIndex(len(final_df.index))
     final_df.to_csv("green_tripdata_2015-01.csv", index=False)
 
-print("Data limpia")
+print("/**********    Clean data     **********/")
